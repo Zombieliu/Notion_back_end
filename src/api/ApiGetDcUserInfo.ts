@@ -20,7 +20,7 @@ export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>
         client_secret: 'P2p8dg3Q10K07w7vYaoNbzwjp_xEb0OT',
         code: call.req.code,
         grant_type: 'authorization_code',
-        redirect_uri: `http://localhost:${port}/dashboard`,
+        redirect_uri: `http://localhost:${port}dashboard`,
         scope: 'identify guilds',
       }).toString(),
       headers: {
@@ -34,7 +34,6 @@ export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>
       },
     });
     const user_info =  JSON.stringify(await userResult.body.json())
-
 
     // Success
     await call.succ({

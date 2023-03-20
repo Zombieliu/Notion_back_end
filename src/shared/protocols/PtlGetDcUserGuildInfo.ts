@@ -5,13 +5,14 @@
  * 增加数据
  * 此处的注释将会自动附带到生成的 API 文档中
  */
-export interface ReqGetDcUserGuilds {
+export interface ReqGetDcUserGuildInfo {
     /** 要增加的消息内容 */
     code:string
+    guild_id:string
 }
 
-export interface ResGetDcUserGuilds {
+export interface ResGetDcUserGuildInfo {
     /** 服务端内容创建时间 */
-    guild_list:string
+    guild_info:string
     time: Date
 }
