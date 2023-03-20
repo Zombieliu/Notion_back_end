@@ -1,8 +1,8 @@
 import { ApiCall } from "tsrpc";
 import {request} from "undici";
-import {ReqGetDcUserInfo, ResGetDcUserInfo} from "../shared/protocols/PtlGetDcUserInfo";
+import {ReqGetDcUserGuilds, ResGetDcUserGuilds} from "../shared/protocols/PtlGetDcUserGuilds";
 
-export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>) {
+export default async function (call: ApiCall<ReqGetDcUserGuilds, ResGetDcUserGuilds>) {
     // Error
     if (call.req.code === '') {
         await call.error('tx_hash is empty');
@@ -28,17 +28,26 @@ export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>
       },
     });
     const oauthData = await tokenResponseData.body.json();
-    const userResult = await request('https://discord.com/api/users/@me', {
+    const userGuildResult = await request('https://discord.com/api/users/@me/guilds', {
       headers: {
         authorization: `${oauthData.token_type} ${oauthData.access_token}`,
       },
     });
-    const user_info =  JSON.stringify(await userResult.body.json())
+    const guilds = await userGuildResult.body.json()
+    let guild_list_info = []
+    for (let i = 0; i < guilds.length; i++) {
+      if (guilds[i].owner) {
+        // const guild_image = `https://cdn.discordapp.com/icons/${guild_list[i].id}/${guild_list[i].icon}.png`
+        guild_list_info.push(guilds[i])
+      }
+    }
 
+
+    const guild_list = JSON.stringify(guild_list_info)
 
     // Success
     await call.succ({
-        user_info,
+        guild_list,
         time
     });
 }
