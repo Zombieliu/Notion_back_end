@@ -1,9 +1,19 @@
 import { ServiceProto } from 'tsrpc-proto';
-import { ReqGetDcUserInfo, ResGetDcUserInfo } from './PtlGetDcUserInfo';
+import { ReqGetDcUserGuildInfo, ResGetDcUserGuildInfo } from './v1/User/PtlGetDcUserGuildInfo';
+import { ReqGetDcUserGuilds, ResGetDcUserGuilds } from './v1/User/PtlGetDcUserGuilds';
+import { ReqGetDcUserInfo, ResGetDcUserInfo } from './v1/User/PtlGetDcUserInfo';
 
 export interface ServiceType {
     api: {
-        "GetDcUserInfo": {
+        "v1/User/GetDcUserGuildInfo": {
+            req: ReqGetDcUserGuildInfo,
+            res: ResGetDcUserGuildInfo
+        },
+        "v1/User/GetDcUserGuilds": {
+            req: ReqGetDcUserGuilds,
+            res: ResGetDcUserGuilds
+        },
+        "v1/User/GetDcUserInfo": {
             req: ReqGetDcUserInfo,
             res: ResGetDcUserInfo
         }
@@ -14,15 +24,57 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
+    "version": 3,
     "services": [
         {
-            "id": 0,
-            "name": "GetDcUserInfo",
+            "id": 4,
+            "name": "v1/User/GetDcUserGuildInfo",
+            "type": "api"
+        },
+        {
+            "id": 3,
+            "name": "v1/User/GetDcUserGuilds",
+            "type": "api"
+        },
+        {
+            "id": 2,
+            "name": "v1/User/GetDcUserInfo",
             "type": "api"
         }
     ],
     "types": {
-        "PtlGetDcUserInfo/ReqGetDcUserInfo": {
+        "v1/User/PtlGetDcUserGuildInfo/ReqGetDcUserGuildInfo": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "guild_id",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/User/PtlGetDcUserGuildInfo/ResGetDcUserGuildInfo": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "guild_info",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/User/PtlGetDcUserGuilds/ReqGetDcUserGuilds": {
             "type": "Interface",
             "properties": [
                 {
@@ -34,7 +86,38 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "PtlGetDcUserInfo/ResGetDcUserInfo": {
+        "v1/User/PtlGetDcUserGuilds/ResGetDcUserGuilds": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "guild_infos",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/User/PtlGetDcUserInfo/ReqGetDcUserInfo": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "code",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/User/PtlGetDcUserInfo/ResGetDcUserInfo": {
             "type": "Interface",
             "properties": [
                 {

@@ -7,7 +7,6 @@
  */
 export interface ReqGetDcUserGuildInfo {
     /** 要增加的消息内容 */
-    code:string
     guild_id:string
 }
 

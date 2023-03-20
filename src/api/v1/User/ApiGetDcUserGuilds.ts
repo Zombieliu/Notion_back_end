@@ -1,8 +1,8 @@
 import { ApiCall } from "tsrpc";
 import {request} from "undici";
-import {ReqGetDcUserInfo, ResGetDcUserInfo} from "../shared/protocols/PtlGetDcUserInfo";
+import {ReqGetDcUserGuilds, ResGetDcUserGuilds} from "../../../shared/protocols/v1/User/PtlGetDcUserGuilds";
 
-export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>) {
+export default async function (call: ApiCall<ReqGetDcUserGuilds, ResGetDcUserGuilds>) {
     // Error
     if (call.req.code === '') {
         await call.error('tx_hash is empty');
@@ -20,7 +20,7 @@ export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>
         client_secret: 'P2p8dg3Q10K07w7vYaoNbzwjp_xEb0OT',
         code: call.req.code,
         grant_type: 'authorization_code',
-        redirect_uri: `http://localhost:${port}dashboard`,
+        redirect_uri: `http://localhost:${port}/dashboard`,
         scope: 'identify guilds',
       }).toString(),
       headers: {
@@ -28,16 +28,25 @@ export default async function (call: ApiCall<ReqGetDcUserInfo, ResGetDcUserInfo>
       },
     });
     const oauthData = await tokenResponseData.body.json();
-    const userResult = await request('https://discord.com/api/users/@me', {
+    const userGuildResult = await request('https://discord.com/api/users/@me/guilds', {
       headers: {
         authorization: `${oauthData.token_type} ${oauthData.access_token}`,
       },
     });
-    const user_info =  JSON.stringify(await userResult.body.json())
+    const guilds = await userGuildResult.body.json()
+    console.log(guilds)
+    // let guild_infos = {}
+    // for (let i = 0; i < guilds.length; i++) {
+    //   if (guilds[i].id == call.req.guild_id) {
+    //     guild_infos = guilds[i]
+    //   }
+    // }
+    //
+    // const guild_info = JSON.stringify(guild_infos)
 
     // Success
     await call.succ({
-        user_info,
+        guild_infos:"1",
         time
     });
 }
