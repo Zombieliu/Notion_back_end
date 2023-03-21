@@ -58,7 +58,7 @@ export default async function (call: ApiCall<ReqGetDcUserToken, ResGetDcUserToke
         dc_user.user_id = user_info.user_id
         dc_user.access_token = oauthData.access_token
         dc_user.refresh_token = oauthData.refresh_token
-        await AppDataSource.getRepository(DcUser).insert(dc_user)
+        await AppDataSource.getRepository(DcUser).save(dc_user)
         // Success
         await call.succ({
             user_id:user_info.user_id,

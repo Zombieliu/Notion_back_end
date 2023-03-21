@@ -22,7 +22,7 @@ export default async function (call: ApiCall<ReqAddRule, ResAddRule>) {
     rules.smart_contract_address = call.req.smart_contract_address;
     rules.min_token_amount = call.req.min_token_amount;
     rules.max_token_amount = call.req.max_token_amount;
-    await AppDataSource.getRepository(ValidationRules).insert(rules)
+    await AppDataSource.getRepository(ValidationRules).save(rules)
     // Success
     await call.succ({
         time
