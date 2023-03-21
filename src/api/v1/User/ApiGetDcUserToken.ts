@@ -62,7 +62,7 @@ export default async function (call: ApiCall<ReqGetDcUserToken, ResGetDcUserToke
         await AppDataSource.getRepository(DcUser).save(dc_user)
         // Success
         await call.succ({
-            user_id:user_info.user_id,
+            user_id:user_info.id,
             time
         });
     }
