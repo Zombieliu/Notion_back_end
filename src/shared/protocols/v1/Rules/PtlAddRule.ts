@@ -19,6 +19,5 @@ export interface ReqAddRule {
 
 export interface ResAddRule {
     /** 服务端内容创建时间 */
-    guild_info_list:string
     time: Date
 }

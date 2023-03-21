@@ -7,11 +7,12 @@
  */
 export interface ReqGetRule {
     /** 要增加的消息内容 */
-    code:string
+    guild_id:string
+    role_id:string
 }
 
 export interface ResGetRule {
     /** 服务端内容创建时间 */
-    guild_info_list:string
+    rule:string
     time: Date
 }
