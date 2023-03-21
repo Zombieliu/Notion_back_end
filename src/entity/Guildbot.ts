@@ -9,9 +9,6 @@ export class Guildbot {
     @Column()
     guild_id!: string;
 
-    @Column()
-    permissions!:string
-
     @CreateDateColumn()
     create?: number;
 

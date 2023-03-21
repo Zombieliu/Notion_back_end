@@ -1,10 +1,15 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqGetDcUserAllGuilds, ResGetDcUserAllGuilds } from './v1/User/PtlGetDcUserAllGuilds';
 import { ReqGetDcUserGuildInfo, ResGetDcUserGuildInfo } from './v1/User/PtlGetDcUserGuildInfo';
 import { ReqGetDcUserGuilds, ResGetDcUserGuilds } from './v1/User/PtlGetDcUserGuilds';
 import { ReqGetDcUserInfo, ResGetDcUserInfo } from './v1/User/PtlGetDcUserInfo';
 
 export interface ServiceType {
     api: {
+        "v1/User/GetDcUserAllGuilds": {
+            req: ReqGetDcUserAllGuilds,
+            res: ResGetDcUserAllGuilds
+        },
         "v1/User/GetDcUserGuildInfo": {
             req: ReqGetDcUserGuildInfo,
             res: ResGetDcUserGuildInfo
@@ -24,8 +29,13 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 3,
+    "version": 4,
     "services": [
+        {
+            "id": 5,
+            "name": "v1/User/GetDcUserAllGuilds",
+            "type": "api"
+        },
         {
             "id": 4,
             "name": "v1/User/GetDcUserGuildInfo",
@@ -43,6 +53,37 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
+        "v1/User/PtlGetDcUserAllGuilds/ReqGetDcUserAllGuilds": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "code",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/User/PtlGetDcUserAllGuilds/ResGetDcUserAllGuilds": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "guild_id_list",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
         "v1/User/PtlGetDcUserGuildInfo/ReqGetDcUserGuildInfo": {
             "type": "Interface",
             "properties": [

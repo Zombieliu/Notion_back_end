@@ -15,11 +15,11 @@ const dc_bot_serve_start = async ()=>{
     const token = "MTA4NTIzNDUxMDY0OTYyMjU0OA.Gv0BL8.11c1KxK7CRjEtmF-IFZiVDfUjFHUGnYlRt6HWE"
 
     const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+    await client.login(token);
 
-
-    // client.once(Events.ClientReady, (c: { user: { tag: any; }; }) => {
-    //     console.log(`Ready! Logged in as ${c.user.tag}`);
-    // });
+    client.once(Events.ClientReady, (c: { user: { tag: any; }; }) => {
+        console.log(`Ready! Logged in as ${c.user.tag}`);
+    });
     //
     // let guild_id = ''
     // client.on(Events.GuildCreate,async (interaction: { id: string , guild :any})=>{
@@ -39,26 +39,20 @@ const dc_bot_serve_start = async ()=>{
     // });
 
 
-    // client.on(Events.GuildCreate,async (interaction: { id: string , guild :any})=>{
-    //     const guildID = interaction.id;
-    //     console.log(`New guild joined: ${guildID}`);
-    //     console.log(await interaction.guild.roles.fetch())
-    //
-    //     // const guild = client.guilds.cache.get(guildID);
-    //     // const permissions = guild.me.permissions;
-    //     // const results = await AppDataSource.getRepository(Guildbot).findOneBy({
-    //     //     guild_id:guildID,
-    //     //     permissions
-    //     // })
-    //     // if (results != undefined){
-    //     //     console.log("same guild")
-    //     // }else{
-    //     //     const user = AppDataSource.getRepository(Guildbot).create()
-    //     //     user.guild_id = guildID
-    //     //     user.permissions = permissions
-    //     //     await AppDataSource.getRepository(Guildbot).save(user)
-    //     // }
-    // })
+    client.on(Events.GuildCreate,async (interaction: { id: string , guild :any})=>{
+        const guildID = interaction.id;
+        console.log(`New guild joined: ${guildID}`);
+        const results = await AppDataSource.getRepository(Guildbot).findOneBy({
+            guild_id:guildID,
+        })
+        if (results != undefined){
+            console.log("same guild")
+        }else{
+            const user = AppDataSource.getRepository(Guildbot).create()
+            user.guild_id = guildID
+            await AppDataSource.getRepository(Guildbot).save(user)
+        }
+    })
 
 
     // client.on(Events.GuildDelete,async (interaction: { id: string; })=>{
@@ -82,7 +76,7 @@ const dc_bot_serve_start = async ()=>{
 
 
 // Log in to Discord with your client's token
-    await client.login(token);
+
     // await client.login(token);
 
     // console.log(client.rest.cdn.icon('1080420505946947604'))
