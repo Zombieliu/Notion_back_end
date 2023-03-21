@@ -7,7 +7,7 @@
  */
 export interface ReqGetDcUserAllGuilds {
     /** 要增加的消息内容 */
-    code:string
+    user_id:string
 }
 
 export interface ResGetDcUserAllGuilds {

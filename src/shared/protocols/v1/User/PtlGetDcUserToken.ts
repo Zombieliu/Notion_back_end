@@ -5,13 +5,13 @@
  * 增加数据
  * 此处的注释将会自动附带到生成的 API 文档中
  */
-export interface ReqGetDcUserInfo {
+export interface ReqGetDcUserToken {
     /** 要增加的消息内容 */
-    user_id:string
+    code:string
 }
 
-export interface ResGetDcUserInfo {
+export interface ResGetDcUserToken {
     /** 服务端内容创建时间 */
-    user_info:string
+    user_id:string
     time: Date
 }
