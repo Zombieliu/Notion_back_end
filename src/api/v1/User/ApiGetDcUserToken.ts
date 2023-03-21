@@ -45,6 +45,7 @@ export default async function (call: ApiCall<ReqGetDcUserToken, ResGetDcUserToke
     })
 
     if (result != null){
+        console.log(0)
         result.access_token = oauthData.access_token
         result.refresh_token = oauthData.refresh_token
         await AppDataSource.getRepository(DcUser).save(result)
@@ -55,7 +56,7 @@ export default async function (call: ApiCall<ReqGetDcUserToken, ResGetDcUserToke
         });
     }else{
         const dc_user = await AppDataSource.getRepository(DcUser).create()
-        dc_user.user_id = user_info.user_id
+        dc_user.user_id = user_info.id
         dc_user.access_token = oauthData.access_token
         dc_user.refresh_token = oauthData.refresh_token
         await AppDataSource.getRepository(DcUser).save(dc_user)
