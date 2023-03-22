@@ -28,7 +28,7 @@ const dc_bot_serve_start = async ()=>{
         }else{
             const user = AppDataSource.getRepository(Guildbot).create()
             user.guild_id = guildID
-            await AppDataSource.getRepository(Guildbot).save(user)
+            await AppDataSource.getRepository(Guildbot).insert(user)
         }
     })
 
@@ -40,9 +40,7 @@ const dc_bot_serve_start = async ()=>{
             guild_id:guildID,
         })
         if (results != null){
-            const user = AppDataSource.getRepository(Guildbot).create()
-            user.guild_id = guildID
-            await AppDataSource.getRepository(Guildbot).remove(user)
+            await AppDataSource.getRepository(Guildbot).remove(results)
         }else{
             console.log("no")
         }
