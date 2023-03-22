@@ -1,6 +1,8 @@
 import {AppDataSource} from "../data-source";
 import {Guildbot} from "../entity/Guildbot";
 import deploy_commands from "./deploy-commands";
+import {ValidationRules} from "../entity/ValidationRules";
+import {ValidationRulesUser} from "../entity/ValidationRulesUser";
 const { token } = require('../../config.json');
 
 const fs = require('node:fs');
@@ -41,6 +43,18 @@ const dc_bot_serve_start = async ()=>{
         })
         if (results != null){
             await AppDataSource.getRepository(Guildbot).remove(results)
+            const validation_result = await AppDataSource.getRepository(ValidationRules).findOneBy({
+                guild_id:guildID,
+            })
+            if (validation_result != null){
+                await AppDataSource.getRepository(ValidationRules).remove(validation_result)
+                const validation_result_user= await AppDataSource.getRepository(ValidationRulesUser).findOneBy({
+                    guild_id:guildID,
+                })
+                if (validation_result_user != null){
+                    await AppDataSource.getRepository(ValidationRulesUser).remove(validation_result_user)
+                }
+            }
         }else{
             console.log("no")
         }
