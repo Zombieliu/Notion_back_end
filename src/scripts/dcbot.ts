@@ -23,7 +23,7 @@ const dc_bot_serve_start = async ()=>{
             guild_id:guildID,
         })
         await deploy_commands(guildID);
-        if (results != undefined){
+        if (results != null){
             console.log("same guild")
         }else{
             const user = AppDataSource.getRepository(Guildbot).create()
@@ -39,7 +39,7 @@ const dc_bot_serve_start = async ()=>{
         const results = await AppDataSource.getRepository(Guildbot).findOneBy({
             guild_id:guildID,
         })
-        if (results != undefined){
+        if (results != null){
             console.log("same guild")
         }else{
             const user = AppDataSource.getRepository(Guildbot).create()

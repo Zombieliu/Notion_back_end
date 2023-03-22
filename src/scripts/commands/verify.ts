@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('verify')
         .setDescription('verify your token!'),
-    async execute(interaction: { user: { id: any; }; guildId: any; reply: (arg0: { content: string; ephemeral: boolean; embeds: any[]; components: any[]; }) => any; }) {
+    async execute(interaction: { guild:any, user: { id: any; }; guildId: any; reply: (arg0: { content: string; ephemeral: boolean; embeds: any[]; components: any[]; }) => any; }) {
         const rule_list = JSON.stringify(await AppDataSource.getRepository(ValidationRules).findBy(
             {
                 guild_id:interaction.guildId
@@ -26,7 +26,10 @@ module.exports = {
             .setTitle('Some title')
             .setURL('https://discord.js.org')
             .setDescription('Some description here');
-
         await interaction.reply({ content: 'I think you should,', ephemeral: true, embeds: [embed], components: [row] });
+
+
+        // const member = await interaction.guild.members.fetch(interaction.user.id);
+        // await member.roles.add(roleIds);
     },
 };
