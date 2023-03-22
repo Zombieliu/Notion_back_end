@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import {Guildbot} from "./entity/Guildbot";
 import {DcUser} from "./entity/DcUser";
 import {ValidationRules} from "./entity/ValidationRules";
+import {ValidationRulesUser} from "./entity/ValidationRulesUser";
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: 'postgres',
   synchronize: true,
   logging: false,
-  entities: [Guildbot,DcUser,ValidationRules],
+  entities: [Guildbot,DcUser,ValidationRules,ValidationRulesUser],
   migrations: [],
   subscribers: [],
 });
