@@ -1,10 +1,11 @@
 import { ApiCall } from "tsrpc";
-import {ReqGetRule, ResGetRule} from "../../../shared/protocols/v1/Rules/PtlGetRule";
+
 import {AppDataSource} from "../../../data-source";
 import {ValidationRules} from "../../../entity/ValidationRules";
+import {ReqGetAllRules, ResGetAllRules} from "../../../shared/protocols/v1/Rules/PtlGetAllRules";
 
 
-export default async function (call: ApiCall<ReqGetRule, ResGetRule>) {
+export default async function (call: ApiCall<ReqGetAllRules, ResGetAllRules>) {
     // Error
     if (call.req.guild_id === '') {
         await call.error('tx_hash is empty');
@@ -14,17 +15,16 @@ export default async function (call: ApiCall<ReqGetRule, ResGetRule>) {
     let time = new Date();
 
 
-    const rule = await AppDataSource.getRepository(ValidationRules).findOneBy(
+    const rule = await AppDataSource.getRepository(ValidationRules).findBy(
         {
             guild_id:call.req.guild_id,
-            role_id:call.req.role_id
         }
     )
 
     if (rule != null){
         // Success
         await call.succ({
-            rule:JSON.stringify(rule),
+            rule_list:JSON.stringify(rule),
             time
         });
     }else{
