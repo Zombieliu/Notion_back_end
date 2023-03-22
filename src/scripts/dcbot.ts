@@ -40,11 +40,11 @@ const dc_bot_serve_start = async ()=>{
             guild_id:guildID,
         })
         if (results != null){
-            console.log("same guild")
-        }else{
             const user = AppDataSource.getRepository(Guildbot).create()
             user.guild_id = guildID
             await AppDataSource.getRepository(Guildbot).remove(user)
+        }else{
+            console.log("no")
         }
     })
 
