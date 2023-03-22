@@ -55,24 +55,20 @@ const dc_bot_serve_start = async ()=>{
     })
 
 
-    // client.on(Events.GuildDelete,async (interaction: { id: string; })=>{
-    //     const guildID = interaction.id;
-    //     console.log(`New guild joined: ${guildID}`);
-    //     const guild = client.guilds.cache.get(guildID);
-    //     const permissions = guild.me.permissions;
-    //     const results = await AppDataSource.getRepository(Guildbot).findOneBy({
-    //         guild_id:guildID,
-    //         permissions
-    //     })
-    //     if (results != undefined){
-    //         console.log("same guild")
-    //     }else{
-    //         const user = AppDataSource.getRepository(Guildbot).create()
-    //         user.guild_id = guildID
-    //         user.permissions = permissions
-    //         await AppDataSource.getRepository(Guildbot).remove(user)
-    //     }
-    // })
+    client.on(Events.GuildDelete,async (interaction: { id: string; })=>{
+        const guildID = interaction.id;
+        console.log(`New guild joined: ${guildID}`);
+        const results = await AppDataSource.getRepository(Guildbot).findOneBy({
+            guild_id:guildID,
+        })
+        if (results != undefined){
+            console.log("same guild")
+        }else{
+            const user = AppDataSource.getRepository(Guildbot).create()
+            user.guild_id = guildID
+            await AppDataSource.getRepository(Guildbot).remove(user)
+        }
+    })
 
 
 // Log in to Discord with your client's token
