@@ -43,12 +43,12 @@ const dc_bot_serve_start = async ()=>{
         })
         if (results != null){
             await AppDataSource.getRepository(Guildbot).remove(results)
-            const validation_result = await AppDataSource.getRepository(ValidationRules).findOneBy({
+            const validation_result = await AppDataSource.getRepository(ValidationRules).findBy({
                 guild_id:guildID,
             })
             if (validation_result != null){
                 await AppDataSource.getRepository(ValidationRules).remove(validation_result)
-                const validation_result_user= await AppDataSource.getRepository(ValidationRulesUser).findOneBy({
+                const validation_result_user= await AppDataSource.getRepository(ValidationRulesUser).findBy({
                     guild_id:guildID,
                 })
                 if (validation_result_user != null){
