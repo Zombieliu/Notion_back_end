@@ -4,7 +4,7 @@ FROM node:16.13.1
 # RUN npm config set registry https://registry.npm.taobao.org/
 
 # npm install
-ADD config.json package*.json /src/
+ADD package*.json /src/
 WORKDIR /src
 RUN npm i
 
@@ -23,6 +23,9 @@ RUN rm -rf /app \
 
 # ENV
 ENV NODE_ENV production
+
+ADD config.json /app
+
 
 EXPOSE 3000
 
