@@ -6,7 +6,7 @@ const path = require('node:path');
 const commands: any[] = [];
 // Grab all the command files from the commands directory you created earlier
 const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter((file: string) => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(commandsPath).filter((file: string) => file.endsWith('.ts'));
 
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
@@ -19,6 +19,7 @@ const rest = new REST({ version: '10' }).setToken(token);
 
 // and deploy your commands!
 const deploy_commands = async (guild_id:string) => {
+    console.log("111111111111111111111",commands)
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
         // The put method is used to fully refresh all commands in the guild with the current set

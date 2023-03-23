@@ -1,11 +1,13 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqAddRule, ResAddRule } from './v1/Rules/PtlAddRule';
-import { ReqGetRule, ResGetRule } from './v1/Rules/PtlGetRule';
+import { ReqDelRule, ResDelRule } from './v1/Rules/PtlDelRule';
+import { ReqGetAllRules, ResGetAllRules } from './v1/Rules/PtlGetAllRules';
 import { ReqGetDcUserAllGuilds, ResGetDcUserAllGuilds } from './v1/User/PtlGetDcUserAllGuilds';
 import { ReqGetDcUserGuildInfo, ResGetDcUserGuildInfo } from './v1/User/PtlGetDcUserGuildInfo';
 import { ReqGetDcUserGuilds, ResGetDcUserGuilds } from './v1/User/PtlGetDcUserGuilds';
 import { ReqGetDcUserInfo, ResGetDcUserInfo } from './v1/User/PtlGetDcUserInfo';
 import { ReqGetDcUserToken, ResGetDcUserToken } from './v1/User/PtlGetDcUserToken';
+import { ReqVerifyUserSucc, ResVerifyUserSucc } from './v1/Verify/PtlVerifyUserSucc';
 
 export interface ServiceType {
     api: {
@@ -13,9 +15,13 @@ export interface ServiceType {
             req: ReqAddRule,
             res: ResAddRule
         },
-        "v1/Rules/GetRule": {
-            req: ReqGetRule,
-            res: ResGetRule
+        "v1/Rules/DelRule": {
+            req: ReqDelRule,
+            res: ResDelRule
+        },
+        "v1/Rules/GetAllRules": {
+            req: ReqGetAllRules,
+            res: ResGetAllRules
         },
         "v1/User/GetDcUserAllGuilds": {
             req: ReqGetDcUserAllGuilds,
@@ -36,6 +42,10 @@ export interface ServiceType {
         "v1/User/GetDcUserToken": {
             req: ReqGetDcUserToken,
             res: ResGetDcUserToken
+        },
+        "v1/Verify/VerifyUserSucc": {
+            req: ReqVerifyUserSucc,
+            res: ResVerifyUserSucc
         }
     },
     msg: {
@@ -44,7 +54,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 5,
+    "version": 6,
     "services": [
         {
             "id": 6,
@@ -52,8 +62,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "api"
         },
         {
-            "id": 7,
-            "name": "v1/Rules/GetRule",
+            "id": 9,
+            "name": "v1/Rules/DelRule",
+            "type": "api"
+        },
+        {
+            "id": 10,
+            "name": "v1/Rules/GetAllRules",
             "type": "api"
         },
         {
@@ -79,6 +94,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 8,
             "name": "v1/User/GetDcUserToken",
+            "type": "api"
+        },
+        {
+            "id": 11,
+            "name": "v1/Verify/VerifyUserSucc",
             "type": "api"
         }
     ],
@@ -156,7 +176,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/Rules/PtlGetRule/ReqGetRule": {
+        "v1/Rules/PtlDelRule/ReqDelRule": {
             "type": "Interface",
             "properties": [
                 {
@@ -175,12 +195,36 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/Rules/PtlGetRule/ResGetRule": {
+        "v1/Rules/PtlDelRule/ResDelRule": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "rule",
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Rules/PtlGetAllRules/ReqGetAllRules": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "guild_id",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Rules/PtlGetAllRules/ResGetAllRules": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "rule_list",
                     "type": {
                         "type": "String"
                     }
@@ -342,6 +386,44 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 },
                 {
                     "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Verify/PtlVerifyUserSucc/ReqVerifyUserSucc": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "guild_id",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "role_id",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "user_id",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Verify/PtlVerifyUserSucc/ResVerifyUserSucc": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
                     "name": "time",
                     "type": {
                         "type": "Date"

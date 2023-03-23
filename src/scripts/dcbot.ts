@@ -73,7 +73,7 @@ const dc_bot_serve_start = async ()=>{
     // set command
     client.commands = new Collection();
     const commandsPath = path.join(__dirname, 'commands');
-    const commandFiles = fs.readdirSync(commandsPath).filter((file: string) => file.endsWith('.js'));
+    const commandFiles = fs.readdirSync(commandsPath).filter((file: string) => file.endsWith('.ts'));
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
         const command = require(filePath);
