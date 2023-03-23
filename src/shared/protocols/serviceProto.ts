@@ -1,4 +1,5 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqHello, ResHello } from './v1/Hello/PtlHello';
 import { ReqAddRule, ResAddRule } from './v1/Rules/PtlAddRule';
 import { ReqDelRule, ResDelRule } from './v1/Rules/PtlDelRule';
 import { ReqGetAllRules, ResGetAllRules } from './v1/Rules/PtlGetAllRules';
@@ -11,6 +12,10 @@ import { ReqVerifyUserSucc, ResVerifyUserSucc } from './v1/Verify/PtlVerifyUserS
 
 export interface ServiceType {
     api: {
+        "v1/Hello/Hello": {
+            req: ReqHello,
+            res: ResHello
+        },
         "v1/Rules/AddRule": {
             req: ReqAddRule,
             res: ResAddRule
@@ -54,8 +59,13 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 6,
+    "version": 7,
     "services": [
+        {
+            "id": 12,
+            "name": "v1/Hello/Hello",
+            "type": "api"
+        },
         {
             "id": 6,
             "name": "v1/Rules/AddRule",
@@ -103,6 +113,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
+        "v1/Hello/PtlHello/ReqHello": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "hello",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Hello/PtlHello/ResHello": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
         "v1/Rules/PtlAddRule/ReqAddRule": {
             "type": "Interface",
             "properties": [
