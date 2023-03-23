@@ -12,14 +12,15 @@ export default async function (call: ApiCall<ReqVerifyUserSucc, ResVerifyUserSuc
     }
 
     let time = new Date();
-    const result = await AppDataSource.getRepository(ValidationRulesUser).findBy(
+
+    const result = await AppDataSource.getRepository(ValidationRulesUser).findOneBy(
         {
+            guild_id:call.req.guild_id,
+            role_id:call.req.role_id,
             user_id:call.req.user_id
         }
     )
-
-    let null_array: ValidationRulesUser[] = []
-    if (result != null_array){
+    if (result){
         await call.succ({
             time
         });

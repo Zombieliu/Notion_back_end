@@ -20,9 +20,7 @@ export default async function (call: ApiCall<ReqGetAllRules, ResGetAllRules>) {
             guild_id:call.req.guild_id,
         }
     )
-    let null_array : ValidationRules[] = []
-
-    if (rule != null_array){
+    if (rule.length != 0){
         // Success
         await call.succ({
             rule_list:JSON.stringify(rule),
