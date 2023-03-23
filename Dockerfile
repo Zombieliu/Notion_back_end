@@ -21,11 +21,10 @@ RUN rm -rf /app \
     && mv node_modules /app/ \
     && rm -rf /src
 
+ADD config.json /app/config.json
+
 # ENV
 ENV NODE_ENV production
-
-ADD config.json /app/
-
 
 EXPOSE 3000
 
