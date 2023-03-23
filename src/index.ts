@@ -27,7 +27,5 @@ async function main() {
     await init()
     await server.start()
     await dc_bot_serve_start()
-
-
 };
 main();

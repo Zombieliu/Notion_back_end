@@ -1,9 +1,10 @@
 import {AppDataSource} from "../data-source";
+import config from "../config";
 import {Guildbot} from "../entity/Guildbot";
 import deploy_commands from "./deploy-commands";
 import {ValidationRules} from "../entity/ValidationRules";
 import {ValidationRulesUser} from "../entity/ValidationRulesUser";
-const { token } = require('../config/config.json');
+
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -12,7 +13,7 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 const dc_bot_serve_start = async ()=>{
     const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-    await client.login(token);
+    await client.login(config.token);
 
     client.once(Events.ClientReady, (c: { user: { tag: any; }; }) => {
         console.log(`Ready! Logged in as ${c.user.tag}`);
