@@ -3,6 +3,7 @@ import { HttpServer } from "tsrpc";
 import { serviceProto } from "./shared/protocols/serviceProto";
 import {AppDataSource} from "./data-source";
 import dc_bot_serve_start from "./scripts/dcbot";
+require('dotenv').config()
 
 // Create the Server
 const server = new HttpServer(serviceProto, {
@@ -27,5 +28,6 @@ async function main() {
     await init()
     await server.start()
     await dc_bot_serve_start()
+
 };
 main();

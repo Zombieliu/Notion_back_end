@@ -6,13 +6,13 @@ import {ValidationRulesUser} from "../entity/ValidationRulesUser";
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { token } = require('../../config.json')
+
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 
 const dc_bot_serve_start = async ()=>{
     const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-    await client.login(token);
+    await client.login(process.env.TOKEN);
 
     client.once(Events.ClientReady, (c: { user: { tag: any; }; }) => {
         console.log(`Ready! Logged in as ${c.user.tag}`);
