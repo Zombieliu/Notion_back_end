@@ -5,6 +5,8 @@ FROM node:16.13.1
 
 # npm install
 ADD package*.json /src/
+ADD config*.json /src/
+
 WORKDIR /src
 RUN npm i
 
@@ -19,6 +21,7 @@ RUN npm prune --production
 RUN rm -rf /app \
     && mv dist /app \
     && mv node_modules /app/ \
+    && mv config*.json /app/ \
     && rm -rf /src
 
 # ENV
