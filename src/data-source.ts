@@ -7,11 +7,11 @@ import {ValidationRulesUser} from "./entity/ValidationRulesUser";
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
+  host: 'containers-us-west-105.railway.app',
+  port: 7783,
   username: 'postgres',
-  password: '123456',
-  database: 'postgres',
+  password: 'YWO07z6rqDJTsoVIwDJ8',
+  database: 'railway',
   synchronize: true,
   logging: false,
   entities: [Guildbot,DcUser,ValidationRules,ValidationRulesUser],
