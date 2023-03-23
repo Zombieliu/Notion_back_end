@@ -23,23 +23,19 @@ module.exports = {
                 .setURL('https://discord.js.org')
                 .setDescription('Some description here');
             await interaction.reply({ content: 'I think you should,', ephemeral: true, embeds: [embed], components: [row] });
-        // setTimeout(async()=>{
-        //     const validation_user_result = await AppDataSource.getRepository(ValidationRulesUser).findBy({
-        //         user_id:`${interaction.user.id}`
-        //
-        //     })
-        //     const member = await interaction.guild.members.fetch(interaction.user.id);
-        //     if (validation_user_result != null){
-        //         for (let i = 0; i < validation_user_result.length;i++){
-        //             await member.roles.add(validation_user_result[i].role_id)
-        //             console.log(`success add ${validation_user_result[i].role_id}`)
-        //         }
-        //     }
-        // },1000 * 60 * 5)
+            setTimeout(async()=>{
+                console.log("执行成功")
+                const validation_user_result = await AppDataSource.getRepository(ValidationRulesUser).findBy({
+                    user_id:`${interaction.user.id}`
 
-
-
-
-
+                })
+                const member = await interaction.guild.members.fetch(interaction.user.id);
+                if (validation_user_result != null){
+                    for (let i = 0; i < validation_user_result.length;i++){
+                        await member.roles.add(validation_user_result[i].role_id)
+                        console.log(`success add ${validation_user_result[i].role_id}`)
+                    }
+                }
+            },1000 * 60 * 3)
     },
 };
