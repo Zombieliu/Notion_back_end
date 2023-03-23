@@ -12,7 +12,6 @@ export default async function (call: ApiCall<ReqGetDcUserToken, ResGetDcUserToke
     }
 
     let time = new Date();
-    const port = 3000
 
 
     const tokenResponseData = await request('https://discord.com/api/oauth2/token', {
@@ -22,7 +21,7 @@ export default async function (call: ApiCall<ReqGetDcUserToken, ResGetDcUserToke
         client_secret: 'HKGaABLMhZ03pLTF7-ADMIedn0isWSdz',
         code: call.req.code,
         grant_type: 'authorization_code',
-        redirect_uri: `http://localhost:${port}/dashboard`,
+        redirect_uri: `https://discord.suirobots.com/dashboard`,
         scope: 'identify guilds',
       }).toString(),
       headers: {

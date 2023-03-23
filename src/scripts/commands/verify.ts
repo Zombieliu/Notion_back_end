@@ -14,7 +14,7 @@ module.exports = {
                         // .setCustomId('primary')
                         .setLabel('Click me!')
                         .setStyle(ButtonStyle.Link)
-                        .setURL(`http://localhost:3000/verify/${interaction.guildId}/${interaction.user.id}`)
+                        .setURL(`https://discord.suirobots.com/verify/${interaction.guildId}/${interaction.user.id}`)
                 );
             // ${interaction.user.id}
             const embed = new EmbedBuilder()
