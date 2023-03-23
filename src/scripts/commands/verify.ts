@@ -28,7 +28,7 @@ module.exports = {
             .setURL('https://discord.js.org')
             .setDescription('Some description here');
         await interaction.reply({ content: 'I think you should,', ephemeral: true, embeds: [embed], components: [row] });
-        
+
         setTimeout(async()=>{
             const validation_user_result = await AppDataSource.getRepository(ValidationRulesUser).findBy({
                 user_id:`${interaction.user.id}`
