@@ -3,12 +3,13 @@ import { HttpServer } from "tsrpc";
 import { serviceProto } from "./shared/protocols/serviceProto";
 import {AppDataSource} from "./data-source";
 import dc_bot_serve_start from "./scripts/dcbot";
-require('dotenv').config()
+
 
 // Create the Server
+const port = process.env.PORT
 const server = new HttpServer(serviceProto, {
     // apiTimeout:9999999,
-    port: 3001,
+    port: Number(port),
     // Remove this to use binary mode (remove from the client too)
     json: true
 });

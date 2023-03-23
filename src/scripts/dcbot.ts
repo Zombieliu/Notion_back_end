@@ -6,6 +6,8 @@ import {ValidationRulesUser} from "../entity/ValidationRulesUser";
 
 const fs = require('node:fs');
 const path = require('node:path');
+require('dotenv').config()
+
 
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
