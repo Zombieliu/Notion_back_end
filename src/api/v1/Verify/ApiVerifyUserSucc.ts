@@ -17,13 +17,13 @@ export default async function (call: ApiCall<ReqVerifyUserSucc, ResVerifyUserSuc
             user_id:call.req.user_id
         }
     )
-    if (result != null){
-        console.log("2")
+
+    let null_array: ValidationRulesUser[] = []
+    if (result != null_array){
         await call.succ({
             time
         });
     }else{
-        console.log("1")
         const user = await AppDataSource.getRepository(ValidationRulesUser).create()
         user.guild_id = call.req.guild_id
         user.role_id = call.req.role_id

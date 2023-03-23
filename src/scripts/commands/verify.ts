@@ -30,7 +30,8 @@ module.exports = {
 
                 })
                 const member = await interaction.guild.members.fetch(interaction.user.id);
-                if (validation_user_result != null){
+                let null_array : ValidationRulesUser[] = []
+                if (validation_user_result != null_array){
                     for (let i = 0; i < validation_user_result.length;i++){
                         await member.roles.add(validation_user_result[i].role_id)
                         console.log(`success add ${validation_user_result[i].role_id}`)
