@@ -36,6 +36,6 @@ module.exports = {
                         console.log(`success add ${validation_user_result[i].role_id}`)
                     }
                 }
-            },1000 * 60 * 3)
+            },1000 * 30)
     },
 };
