@@ -3,7 +3,7 @@ import {Guildbot} from "../entity/Guildbot";
 import deploy_commands from "./deploy-commands";
 import {ValidationRules} from "../entity/ValidationRules";
 import {ValidationRulesUser} from "../entity/ValidationRulesUser";
-const { token } = require('../../config.json');
+const { token } = require('../config/config.json');
 
 const fs = require('node:fs');
 const path = require('node:path');
