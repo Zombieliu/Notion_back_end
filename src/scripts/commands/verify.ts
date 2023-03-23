@@ -8,19 +8,13 @@ module.exports = {
         .setName('verify')
         .setDescription('verify your token!'),
     async execute(interaction: { guild:any, user: { id: any; }; guildId: any; reply: (arg0: { content: string; ephemeral: boolean; embeds: any[]; components: any[]; }) => any; }) {
-        const rule_list = JSON.stringify(await AppDataSource.getRepository(ValidationRules).findBy(
-            {
-                guild_id:interaction.guildId
-            }
-        ))
-        if (rule_list != null){
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
                         // .setCustomId('primary')
                         .setLabel('Click me!')
                         .setStyle(ButtonStyle.Link)
-                        .setURL(`http://localhost:3000/verify/${interaction.guildId}/${interaction.user.id}/${rule_list}`)
+                        .setURL(`http://localhost:3000/verify/${interaction.guildId}/${interaction.user.id}`)
                 );
             // ${interaction.user.id}
             const embed = new EmbedBuilder()
@@ -29,10 +23,6 @@ module.exports = {
                 .setURL('https://discord.js.org')
                 .setDescription('Some description here');
             await interaction.reply({ content: 'I think you should,', ephemeral: true, embeds: [embed], components: [row] });
-        }else{
-            await interaction.reply({ content: 'no,', ephemeral: true, embeds: [], components: [] });
-        }
-
         // setTimeout(async()=>{
         //     const validation_user_result = await AppDataSource.getRepository(ValidationRulesUser).findBy({
         //         user_id:`${interaction.user.id}`
