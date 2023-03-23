@@ -24,7 +24,7 @@ RUN rm -rf /app \
 # ENV
 ENV NODE_ENV production
 
-ADD config.json /app
+ADD config.json /app/
 
 
 EXPOSE 3000
