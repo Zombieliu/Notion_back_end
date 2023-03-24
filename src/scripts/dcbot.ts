@@ -88,8 +88,6 @@ const dc_bot_serve_start = async ()=>{
     // console.log(client.rest.cdn.icon('1080420505946947604'))
     // const guild = await client.guilds.fetch("1080420505946947604")
     // console.log(await guild.roles.fetch())
-
-
     // set command
     client.commands = new Collection();
     const commandsPath = path.join(__dirname, 'commands');
