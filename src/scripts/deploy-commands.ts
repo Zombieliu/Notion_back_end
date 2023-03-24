@@ -16,10 +16,12 @@ for (const file of commandFiles) {
 }
 
 // Construct and prepare an instance of the REST module
+console.log(process.env.TOKEN)
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 // and deploy your commands!
 const deploy_commands = async (guild_id:string) => {
+    console.log(process.env.CLIENTID)
     console.log("111111111111111111111",commands)
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);

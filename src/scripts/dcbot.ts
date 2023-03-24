@@ -82,9 +82,7 @@ const dc_bot_serve_start = async ()=>{
     });
 
 // Log in to Discord with your client's token
-
     // await client.login(token);
-
     // console.log(client.rest.cdn.icon('1080420505946947604'))
     // const guild = await client.guilds.fetch("1080420505946947604")
     // console.log(await guild.roles.fetch())
