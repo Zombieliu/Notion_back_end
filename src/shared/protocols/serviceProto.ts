@@ -1,51 +1,41 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqGetActivityAllDetails, ResGetActivityAllDetails } from './v1/Activity/PtlGetActivityAllDetails';
+import { ReqGetCommunityMemberDetails, ResGetCommunityMemberDetails } from './v1/CommunityMember/PtlGetCommunityMemberDetails';
+import { ReqGetCourseAllDetails, ResGetCourseAllDetails } from './v1/Course/PtlGetCourseAllDetails';
+import { ReqGetCourseDetails, ResGetCourseDetails } from './v1/Course/PtlGetCourseDetails';
+import { ReqGetHackathonsDetails, ResGetHackathonsDetails } from './v1/Hackathons/PtlGetHackathonsDetails';
 import { ReqHello, ResHello } from './v1/Hello/PtlHello';
-import { ReqAddRule, ResAddRule } from './v1/Rules/PtlAddRule';
-import { ReqDelRule, ResDelRule } from './v1/Rules/PtlDelRule';
-import { ReqGetAllRules, ResGetAllRules } from './v1/Rules/PtlGetAllRules';
-import { ReqGetDcUserAllGuilds, ResGetDcUserAllGuilds } from './v1/User/PtlGetDcUserAllGuilds';
-import { ReqGetDcUserGuildInfo, ResGetDcUserGuildInfo } from './v1/User/PtlGetDcUserGuildInfo';
-import { ReqGetDcUserInfo, ResGetDcUserInfo } from './v1/User/PtlGetDcUserInfo';
-import { ReqGetDcUserToken, ResGetDcUserToken } from './v1/User/PtlGetDcUserToken';
-import { ReqVerifyUserSucc, ResVerifyUserSucc } from './v1/Verify/PtlVerifyUserSucc';
+import { ReqGetMediaDetails, ResGetMediaDetails } from './v1/Media/PtlGetMediaDetails';
 
 export interface ServiceType {
     api: {
+        "v1/Activity/GetActivityAllDetails": {
+            req: ReqGetActivityAllDetails,
+            res: ResGetActivityAllDetails
+        },
+        "v1/CommunityMember/GetCommunityMemberDetails": {
+            req: ReqGetCommunityMemberDetails,
+            res: ResGetCommunityMemberDetails
+        },
+        "v1/Course/GetCourseAllDetails": {
+            req: ReqGetCourseAllDetails,
+            res: ResGetCourseAllDetails
+        },
+        "v1/Course/GetCourseDetails": {
+            req: ReqGetCourseDetails,
+            res: ResGetCourseDetails
+        },
+        "v1/Hackathons/GetHackathonsDetails": {
+            req: ReqGetHackathonsDetails,
+            res: ResGetHackathonsDetails
+        },
         "v1/Hello/Hello": {
             req: ReqHello,
             res: ResHello
         },
-        "v1/Rules/AddRule": {
-            req: ReqAddRule,
-            res: ResAddRule
-        },
-        "v1/Rules/DelRule": {
-            req: ReqDelRule,
-            res: ResDelRule
-        },
-        "v1/Rules/GetAllRules": {
-            req: ReqGetAllRules,
-            res: ResGetAllRules
-        },
-        "v1/User/GetDcUserAllGuilds": {
-            req: ReqGetDcUserAllGuilds,
-            res: ResGetDcUserAllGuilds
-        },
-        "v1/User/GetDcUserGuildInfo": {
-            req: ReqGetDcUserGuildInfo,
-            res: ResGetDcUserGuildInfo
-        },
-        "v1/User/GetDcUserInfo": {
-            req: ReqGetDcUserInfo,
-            res: ResGetDcUserInfo
-        },
-        "v1/User/GetDcUserToken": {
-            req: ReqGetDcUserToken,
-            res: ResGetDcUserToken
-        },
-        "v1/Verify/VerifyUserSucc": {
-            req: ReqVerifyUserSucc,
-            res: ResVerifyUserSucc
+        "v1/Media/GetMediaDetails": {
+            req: ReqGetMediaDetails,
+            res: ResGetMediaDetails
         }
     },
     msg: {
@@ -54,55 +44,207 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 8,
+    "version": 10,
     "services": [
         {
-            "id": 12,
-            "name": "v1/Hello/Hello",
-            "type": "api"
-        },
-        {
-            "id": 6,
-            "name": "v1/Rules/AddRule",
+            "id": 11,
+            "name": "v1/Activity/GetActivityAllDetails",
             "type": "api"
         },
         {
             "id": 9,
-            "name": "v1/Rules/DelRule",
+            "name": "v1/CommunityMember/GetCommunityMemberDetails",
+            "type": "api"
+        },
+        {
+            "id": 6,
+            "name": "v1/Course/GetCourseAllDetails",
+            "type": "api"
+        },
+        {
+            "id": 7,
+            "name": "v1/Course/GetCourseDetails",
             "type": "api"
         },
         {
             "id": 10,
-            "name": "v1/Rules/GetAllRules",
+            "name": "v1/Hackathons/GetHackathonsDetails",
             "type": "api"
         },
         {
-            "id": 5,
-            "name": "v1/User/GetDcUserAllGuilds",
-            "type": "api"
-        },
-        {
-            "id": 4,
-            "name": "v1/User/GetDcUserGuildInfo",
-            "type": "api"
-        },
-        {
-            "id": 2,
-            "name": "v1/User/GetDcUserInfo",
+            "id": 0,
+            "name": "v1/Hello/Hello",
             "type": "api"
         },
         {
             "id": 8,
-            "name": "v1/User/GetDcUserToken",
-            "type": "api"
-        },
-        {
-            "id": 11,
-            "name": "v1/Verify/VerifyUserSucc",
+            "name": "v1/Media/GetMediaDetails",
             "type": "api"
         }
     ],
     "types": {
+        "v1/Activity/PtlGetActivityAllDetails/ReqGetActivityAllDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Activity/PtlGetActivityAllDetails/ResGetActivityAllDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/CommunityMember/PtlGetCommunityMemberDetails/ReqGetCommunityMemberDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/CommunityMember/PtlGetCommunityMemberDetails/ResGetCommunityMemberDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Course/PtlGetCourseAllDetails/ReqGetCourseAllDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Course/PtlGetCourseAllDetails/ResGetCourseAllDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Course/PtlGetCourseDetails/ReqGetCourseDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Course/PtlGetCourseDetails/ResGetCourseDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Hackathons/PtlGetHackathonsDetails/ReqGetHackathonsDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Hackathons/PtlGetHackathonsDetails/ResGetHackathonsDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
         "v1/Hello/PtlHello/ReqHello": {
             "type": "Interface",
             "properties": [
@@ -127,296 +269,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/Rules/PtlAddRule/ReqAddRule": {
+        "v1/Media/PtlGetMediaDetails/ReqGetMediaDetails": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "guild_id",
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Media/PtlGetMediaDetails/ResGetMediaDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
                     "id": 1,
-                    "name": "role_id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "description",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "chain_type",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 4,
-                    "name": "token_type",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 5,
-                    "name": "smart_contract_address",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 6,
-                    "name": "min_token_amount",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 7,
-                    "name": "max_token_amount",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/Rules/PtlAddRule/ResAddRule": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/Rules/PtlDelRule/ReqDelRule": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "guild_id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "role_id",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/Rules/PtlDelRule/ResDelRule": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/Rules/PtlGetAllRules/ReqGetAllRules": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "guild_id",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/Rules/PtlGetAllRules/ResGetAllRules": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "rule_list",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserAllGuilds/ReqGetDcUserAllGuilds": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 1,
-                    "name": "user_id",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserAllGuilds/ResGetDcUserAllGuilds": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "guild_id_list",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserGuildInfo/ReqGetDcUserGuildInfo": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "guild_id",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserGuildInfo/ResGetDcUserGuildInfo": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "guild_info",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserInfo/ReqGetDcUserInfo": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 1,
-                    "name": "user_id",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserInfo/ResGetDcUserInfo": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "user_info",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserToken/ReqGetDcUserToken": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "code",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/User/PtlGetDcUserToken/ResGetDcUserToken": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "user_id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "v1/Verify/PtlVerifyUserSucc/ReqVerifyUserSucc": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "guild_id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "role_id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "user_id",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "v1/Verify/PtlVerifyUserSucc/ResVerifyUserSucc": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
                     "name": "time",
                     "type": {
                         "type": "Date"
