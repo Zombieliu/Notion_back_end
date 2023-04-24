@@ -1,7 +1,6 @@
 
 
 const MediaData  = async (response: any) =>{
-    console.log(response)
     let MediaDataList = []
     for (let i = 0 ;i<response.length;i++){
         const List = {

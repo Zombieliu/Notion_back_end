@@ -1,6 +1,7 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqGetActivityAllDetails, ResGetActivityAllDetails } from './v1/Activity/PtlGetActivityAllDetails';
 import { ReqGetCommunityMemberDetails, ResGetCommunityMemberDetails } from './v1/CommunityMember/PtlGetCommunityMemberDetails';
+import { ReqGetCommunity, ResGetCommunity } from './v1/Communtiy/PtlGetCommunity';
 import { ReqGetCourseAllDetails, ResGetCourseAllDetails } from './v1/Course/PtlGetCourseAllDetails';
 import { ReqGetCourseDetails, ResGetCourseDetails } from './v1/Course/PtlGetCourseDetails';
 import { ReqGetHackathonsDetails, ResGetHackathonsDetails } from './v1/Hackathons/PtlGetHackathonsDetails';
@@ -16,6 +17,10 @@ export interface ServiceType {
         "v1/CommunityMember/GetCommunityMemberDetails": {
             req: ReqGetCommunityMemberDetails,
             res: ResGetCommunityMemberDetails
+        },
+        "v1/Communtiy/GetCommunity": {
+            req: ReqGetCommunity,
+            res: ResGetCommunity
         },
         "v1/Course/GetCourseAllDetails": {
             req: ReqGetCourseAllDetails,
@@ -44,7 +49,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 10,
+    "version": 18,
     "services": [
         {
             "id": 11,
@@ -54,6 +59,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 9,
             "name": "v1/CommunityMember/GetCommunityMemberDetails",
+            "type": "api"
+        },
+        {
+            "id": 12,
+            "name": "v1/Communtiy/GetCommunity",
             "type": "api"
         },
         {
@@ -87,8 +97,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
-                    "name": "databaseId",
+                    "id": 1,
+                    "name": "locale",
                     "type": {
                         "type": "String"
                     }
@@ -118,8 +128,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
-                    "name": "databaseId",
+                    "id": 1,
+                    "name": "locale",
                     "type": {
                         "type": "String"
                     }
@@ -145,15 +155,55 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/Course/PtlGetCourseAllDetails/ReqGetCourseAllDetails": {
+        "v1/Communtiy/PtlGetCommunity/ReqGetCommunity": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "databaseId",
+                    "name": "locale",
                     "type": {
                         "type": "String"
                     }
+                }
+            ]
+        },
+        "v1/Communtiy/PtlGetCommunity/ResGetCommunity": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Course/PtlGetCourseAllDetails/ReqGetCourseAllDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 2,
+                    "name": "databaseId",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 1,
+                    "name": "locale",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
                 }
             ]
         },
@@ -180,15 +230,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
-                    "name": "databaseId",
+                    "id": 1,
+                    "name": "id",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
-                    "id": 1,
-                    "name": "id",
+                    "id": 4,
+                    "name": "locale",
                     "type": {
                         "type": "String"
                     }
@@ -218,8 +268,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
-                    "name": "databaseId",
+                    "id": 1,
+                    "name": "locale",
                     "type": {
                         "type": "String"
                     }
@@ -273,8 +323,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
-                    "name": "databaseId",
+                    "id": 1,
+                    "name": "locale",
                     "type": {
                         "type": "String"
                     }

@@ -5,15 +5,22 @@ import {
     ResGetHackathonsDetails
 } from "../../../shared/protocols/v1/Hackathons/PtlGetHackathonsDetails";
 import {HackathonsData} from "../../../components/Hackathons";
+import {
+    enCourseDatabaseId,
+    enHackathonsDatabaseID,
+    znCourseDatabaseId,
+    znHackathonsDatabaseID
+} from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetHackathonsDetails, ResGetHackathonsDetails>) {
     // Error
-    if (call.req.databaseId === '') {
+    if (call.req.locale === '') {
         await call.error('guild_id is empty');
         return;
     }
 
-    const response = await queryProjectAllDetailID(call.req.databaseId)
+    const databaseId = call.req.locale == "zn" ? znHackathonsDatabaseID : enHackathonsDatabaseID
+    const response = await queryProjectAllDetailID(databaseId)
     let hackathons_data = await HackathonsData(response.results)
 
 

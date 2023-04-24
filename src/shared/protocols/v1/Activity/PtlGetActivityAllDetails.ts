@@ -7,7 +7,7 @@
  */
 export interface ReqGetActivityAllDetails {
     /** 要增加的消息内容 */
-    databaseId:string
+    locale:string
 }
 
 export interface ResGetActivityAllDetails {

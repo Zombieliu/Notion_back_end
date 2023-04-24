@@ -4,16 +4,20 @@ import {
 } from "../../../shared/protocols/v1/Course/PtlGetCourseAllDetails";
 import {queryProjectAllDetailID} from "../public";
 import {QueryAllCourse} from "../../../components/course_data";
+import {enCourseDatabaseId, znCourseDatabaseId} from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetCourseAllDetails, ResGetCourseAllDetails>) {
     // Error
-    if (call.req.databaseId === '') {
+    if (call.req.locale === '') {
         await call.error('guild_id is empty');
         return;
     }
 
-    const response = await queryProjectAllDetailID(call.req.databaseId)
+    const databaseId = call.req.locale == "zn" ? znCourseDatabaseId : enCourseDatabaseId
+    const response = await queryProjectAllDetailID(databaseId)
     let project_details = await QueryAllCourse(response)
+
+
 
     let time = new Date();
 

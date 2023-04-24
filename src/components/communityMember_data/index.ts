@@ -1,6 +1,6 @@
 const CommunityMemberData  = async (response: any) =>{
-    console.log(response)
     let CommunityMemberDataList = []
+    console.log("xxxxxxxxxx",response[0].properties.Position)
     for (let i = 0 ;i<response.length;i++){
         const List = {
             name:response[i].properties.Name.title[0].plain_text,

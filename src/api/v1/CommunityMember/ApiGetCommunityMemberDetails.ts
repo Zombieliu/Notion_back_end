@@ -5,15 +5,19 @@ import {
     ResGetCommunityMemberDetails
 } from "../../../shared/protocols/v1/CommunityMember/PtlGetCommunityMemberDetails";
 import {CommunityMemberData} from "../../../components/communityMember_data/index";
+import {
+    enCommunityMemberDatabaseID,
+    znCommunityMemberDatabaseID
+} from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetCommunityMemberDetails, ResGetCommunityMemberDetails>) {
     // Error
-    if (call.req.databaseId === '') {
+    if (call.req.locale === '') {
         await call.error('guild_id is empty');
         return;
     }
-
-    const response = await queryProjectAllDetail(call.req.databaseId)
+    const databaseId = call.req.locale == "zn" ? znCommunityMemberDatabaseID : enCommunityMemberDatabaseID
+    const response = await queryProjectAllDetail(databaseId)
     let communityMember_data = await CommunityMemberData(response.results)
 
     let time = new Date();

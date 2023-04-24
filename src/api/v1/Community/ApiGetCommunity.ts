@@ -3,16 +3,18 @@ import {queryProjectAllDetail} from "../public";
 import {ReqGetMediaDetails, ResGetMediaDetails} from "../../../shared/protocols/v1/Media/PtlGetMediaDetails";
 import {MediaData} from "../../../components/media_data";
 import {
-   enMediaDatabaseID,znMediaDatabaseID
+    enCommunityDatabaseID,
+    enMediaDatabaseID, znCommunityDatabaseID, znMediaDatabaseID
 } from "../../../components/constants";
+import {ReqGetCommunity, ResGetCommunity} from "../../../shared/protocols/v1/Communtiy/PtlGetCommunity";
 
-export default async function (call: ApiCall<ReqGetMediaDetails, ResGetMediaDetails>) {
+export default async function (call: ApiCall<ReqGetCommunity, ResGetCommunity>) {
     // Error
     if (call.req.locale === '') {
         await call.error('guild_id is empty');
         return;
     }
-    const databaseId = call.req.locale == "zn" ? znMediaDatabaseID : enMediaDatabaseID
+    const databaseId = call.req.locale == "zn" ? znCommunityDatabaseID : enCommunityDatabaseID
     const response = await queryProjectAllDetail(databaseId)
     let media_data = await MediaData(response.results)
 

@@ -149,11 +149,9 @@ const CourseData = async (pageId: { id: any }[]) =>{
             name: courseKidData.Name.title[0].plain_text,
             content: ContentList
         }
-        console.log(courseKidDataList)
        await CourseDataList.push(courseKidDataList)
     }
 
-    console.log(CourseDataList)
 
     return  CourseDataList
 }
@@ -190,7 +188,7 @@ const QueryCourseData = async (response: { results: string | any[]; },id: string
             let typeData = await response.results[i].properties.Type.multi_select
             let TypeList = TypeData(typeData)
 
-            console.log("1")
+            console.log("1",TypeList)
             // @ts-ignore
             let Community_recommendationPageId = await response.results[i].properties.Community_recommendation.relation[0].id
             let Community_recommendationList = await CommunityRecommendationData(Community_recommendationPageId)
@@ -220,7 +218,6 @@ const QueryCourseData = async (response: { results: string | any[]; },id: string
             let CommunitySupportPageId = await  response.results[i].properties.Community_support.relation
             let Community_support_List = await CommunitySupportData(CommunitySupportPageId)
 
-            console.log(Community_support_List)
             // @ts-ignore
             let CourseDataPageId = await response.results[i].properties.Course_data.relation
             let Course_list = await CourseData(CourseDataPageId)

@@ -7,8 +7,9 @@
  */
 export interface ReqGetCourseDetails {
     /** 要增加的消息内容 */
-    databaseId:string
     id:string
+    locale:string
+
 }
 
 export interface ResGetCourseDetails {

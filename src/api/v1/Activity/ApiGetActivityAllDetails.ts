@@ -5,18 +5,20 @@ import {
     ResGetActivityAllDetails
 } from "../../../shared/protocols/v1/Activity/PtlGetActivityAllDetails";
 import {QueryAllActivity} from "../../../components/activity_data";
+import {
+    enActivityDatabaseID,
+    znActivityDatabaseID
+} from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetActivityAllDetails, ResGetActivityAllDetails>) {
     // Error
-    if (call.req.databaseId === '') {
+    if (call.req.locale === '') {
         await call.error('guild_id is empty');
         return;
     }
-
-    const response = await queryProjectAllDetailID(call.req.databaseId)
+    const databaseId = call.req.locale == "zn" ? znActivityDatabaseID : enActivityDatabaseID
+    const response = await queryProjectAllDetailID(databaseId)
     let   project_details = await QueryAllActivity(response)
-
-    console.log(project_details)
 
     let time = new Date();
 
