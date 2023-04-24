@@ -188,32 +188,26 @@ const QueryCourseData = async (response: { results: string | any[]; },id: string
             let typeData = await response.results[i].properties.Type.multi_select
             let TypeList = TypeData(typeData)
 
-            console.log("1",TypeList)
             // @ts-ignore
             let Community_recommendationPageId = await response.results[i].properties.Community_recommendation.relation[0].id
             let Community_recommendationList = await CommunityRecommendationData(Community_recommendationPageId)
 
-            console.log("2")
             // @ts-ignore
             let TeacherPageId = await response.results[i].properties.Teacher.relation;
             let Teacher_List = await TeacherData(TeacherPageId)
 
-            console.log("3")
             // @ts-ignore
             let ProjectProviderPageId = await response.results[i].properties.Project_provider.relation
             let Project_providerList = await ProjectProviderData(ProjectProviderPageId)
 
-            console.log("4")
             // @ts-ignore
             let TargetPageId = await  response.results[i].properties.Target.relation
             let Target_List = await TargetData(TargetPageId)
-            //
-            console.log("5")
+
             // @ts-ignore
             let MethodPageId = await  response.results[i].properties.Method.relation
             let Method_List = await MethodData(MethodPageId)
 
-            console.log("6")
             // @ts-ignore
             let CommunitySupportPageId = await  response.results[i].properties.Community_support.relation
             let Community_support_List = await CommunitySupportData(CommunitySupportPageId)

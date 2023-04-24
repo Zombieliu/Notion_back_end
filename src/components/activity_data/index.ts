@@ -23,8 +23,6 @@ const ActivityListData = async (pageId: any) => {
             poster_1: activityKidsData.Poster_1.files[0] ? activityKidsData.Poster_1.files[0].file.url : "",
             poster_2: activityKidsData.Poster_2.files[0] ? activityKidsData.Poster_2.files[0].file.url:"",
         }
-
-
         Activity_DataList.push(activity_dataList)
 
     }
@@ -53,6 +51,24 @@ const QueryAllActivity = async (response: { results: string | any[];}) =>{
 }
 
 
+const QueryActivity = async (response: { results: string | any[] }, id: string) =>{
+        const i = Number(id)-1
+
+        let activityListID = await response.results[i].properties.List.relation[0].id
+
+        let ActivityListList = await ActivityListData(activityListID)
+
+        let Activity_info =
+            {
+                id:    response.results[i].properties.ID.number,
+                name:  response.results[i].properties.Name.title[0].plain_text,
+                des:   response.results[i].properties.Des.rich_text[0].plain_text,
+                activityList: ActivityListList,
+            }
+
+    return Activity_info
+}
 
 
-export {QueryAllActivity}
+
+export {QueryAllActivity,QueryActivity}

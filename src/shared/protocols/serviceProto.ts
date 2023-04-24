@@ -1,5 +1,6 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqGetActivityAllDetails, ResGetActivityAllDetails } from './v1/Activity/PtlGetActivityAllDetails';
+import { ReqGetActivityDetails, ResGetActivityDetails } from './v1/Activity/PtlGetActivityDetails';
 import { ReqGetCommunityMemberDetails, ResGetCommunityMemberDetails } from './v1/CommunityMember/PtlGetCommunityMemberDetails';
 import { ReqGetCommunity, ResGetCommunity } from './v1/Communtiy/PtlGetCommunity';
 import { ReqGetCourseAllDetails, ResGetCourseAllDetails } from './v1/Course/PtlGetCourseAllDetails';
@@ -13,6 +14,10 @@ export interface ServiceType {
         "v1/Activity/GetActivityAllDetails": {
             req: ReqGetActivityAllDetails,
             res: ResGetActivityAllDetails
+        },
+        "v1/Activity/GetActivityDetails": {
+            req: ReqGetActivityDetails,
+            res: ResGetActivityDetails
         },
         "v1/CommunityMember/GetCommunityMemberDetails": {
             req: ReqGetCommunityMemberDetails,
@@ -49,11 +54,16 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 18,
+    "version": 19,
     "services": [
         {
             "id": 11,
             "name": "v1/Activity/GetActivityAllDetails",
+            "type": "api"
+        },
+        {
+            "id": 13,
+            "name": "v1/Activity/GetActivityDetails",
             "type": "api"
         },
         {
@@ -106,6 +116,44 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "v1/Activity/PtlGetActivityAllDetails/ResGetActivityAllDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "project_details",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "time",
+                    "type": {
+                        "type": "Date"
+                    }
+                }
+            ]
+        },
+        "v1/Activity/PtlGetActivityDetails/ReqGetActivityDetails": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "locale",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "v1/Activity/PtlGetActivityDetails/ResGetActivityDetails": {
             "type": "Interface",
             "properties": [
                 {
