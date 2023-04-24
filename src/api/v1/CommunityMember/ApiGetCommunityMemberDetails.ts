@@ -16,7 +16,7 @@ export default async function (call: ApiCall<ReqGetCommunityMemberDetails, ResGe
         await call.error('guild_id is empty');
         return;
     }
-    const databaseId = call.req.locale == "zn" ? znCommunityMemberDatabaseID : enCommunityMemberDatabaseID
+    const databaseId = call.req.locale == "cn" ? znCommunityMemberDatabaseID : enCommunityMemberDatabaseID
     const response = await queryProjectAllDetail(databaseId)
     let communityMember_data = await CommunityMemberData(response.results)
 

@@ -12,7 +12,7 @@ export default async function (call: ApiCall<ReqGetMediaDetails, ResGetMediaDeta
         await call.error('guild_id is empty');
         return;
     }
-    const databaseId = call.req.locale == "zn" ? znMediaDatabaseID : enMediaDatabaseID
+    const databaseId = call.req.locale == "cn" ? znMediaDatabaseID : enMediaDatabaseID
     const response = await queryProjectAllDetail(databaseId)
     let media_data = await MediaData(response.results)
 

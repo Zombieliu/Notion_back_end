@@ -16,7 +16,7 @@ export default async function (call: ApiCall<ReqGetActivityAllDetails, ResGetAct
         await call.error('guild_id is empty');
         return;
     }
-    const databaseId = call.req.locale == "zn" ? znActivityDatabaseID : enActivityDatabaseID
+    const databaseId = call.req.locale == "cn" ? znActivityDatabaseID : enActivityDatabaseID
     const response = await queryProjectAllDetailID(databaseId)
     let   project_details = await QueryAllActivity(response)
 

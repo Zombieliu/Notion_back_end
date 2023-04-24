@@ -19,7 +19,7 @@ export default async function (call: ApiCall<ReqGetHackathonsDetails, ResGetHack
         return;
     }
 
-    const databaseId = call.req.locale == "zn" ? znHackathonsDatabaseID : enHackathonsDatabaseID
+    const databaseId = call.req.locale == "cn" ? znHackathonsDatabaseID : enHackathonsDatabaseID
     const response = await queryProjectAllDetailID(databaseId)
     let hackathons_data = await HackathonsData(response.results)
 

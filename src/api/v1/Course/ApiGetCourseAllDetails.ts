@@ -13,7 +13,7 @@ export default async function (call: ApiCall<ReqGetCourseAllDetails, ResGetCours
         return;
     }
 
-    const databaseId = call.req.locale == "zn" ? znCourseDatabaseId : enCourseDatabaseId
+    const databaseId = call.req.locale == "cn" ? znCourseDatabaseId : enCourseDatabaseId
     const response = await queryProjectAllDetailID(databaseId)
     let project_details = await QueryAllCourse(response)
 

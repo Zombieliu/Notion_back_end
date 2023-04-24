@@ -10,7 +10,7 @@ export default async function (call: ApiCall<ReqGetCourseDetails, ResGetCourseDe
         await call.error('guild_id is empty');
         return;
     }
-    const databaseId = call.req.locale == "zn" ? znCourseDatabaseId : enCourseDatabaseId
+    const databaseId = call.req.locale == "cn" ? znCourseDatabaseId : enCourseDatabaseId
     const response = await queryProjectAllDetail(databaseId)
     let project_details = await QueryCourseData(response,call.req.id)
 
