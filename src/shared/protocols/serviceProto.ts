@@ -1,8 +1,8 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqGetActivityAllDetails, ResGetActivityAllDetails } from './v1/Activity/PtlGetActivityAllDetails';
 import { ReqGetActivityDetails, ResGetActivityDetails } from './v1/Activity/PtlGetActivityDetails';
+import { ReqGetCommunity, ResGetCommunity } from './v1/Community/PtlGetCommunity';
 import { ReqGetCommunityMemberDetails, ResGetCommunityMemberDetails } from './v1/CommunityMember/PtlGetCommunityMemberDetails';
-import { ReqGetCommunity, ResGetCommunity } from './v1/Communtiy/PtlGetCommunity';
 import { ReqGetCourseAllDetails, ResGetCourseAllDetails } from './v1/Course/PtlGetCourseAllDetails';
 import { ReqGetCourseDetails, ResGetCourseDetails } from './v1/Course/PtlGetCourseDetails';
 import { ReqGetHackathonsDetails, ResGetHackathonsDetails } from './v1/Hackathons/PtlGetHackathonsDetails';
@@ -19,13 +19,13 @@ export interface ServiceType {
             req: ReqGetActivityDetails,
             res: ResGetActivityDetails
         },
+        "v1/Community/GetCommunity": {
+            req: ReqGetCommunity,
+            res: ResGetCommunity
+        },
         "v1/CommunityMember/GetCommunityMemberDetails": {
             req: ReqGetCommunityMemberDetails,
             res: ResGetCommunityMemberDetails
-        },
-        "v1/Communtiy/GetCommunity": {
-            req: ReqGetCommunity,
-            res: ResGetCommunity
         },
         "v1/Course/GetCourseAllDetails": {
             req: ReqGetCourseAllDetails,
@@ -54,7 +54,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 19,
+    "version": 20,
     "services": [
         {
             "id": 11,
@@ -67,13 +67,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "api"
         },
         {
-            "id": 9,
-            "name": "v1/CommunityMember/GetCommunityMemberDetails",
+            "id": 14,
+            "name": "v1/Community/GetCommunity",
             "type": "api"
         },
         {
-            "id": 12,
-            "name": "v1/Communtiy/GetCommunity",
+            "id": 9,
+            "name": "v1/CommunityMember/GetCommunityMemberDetails",
             "type": "api"
         },
         {
@@ -172,11 +172,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/CommunityMember/PtlGetCommunityMemberDetails/ReqGetCommunityMemberDetails": {
+        "v1/Community/PtlGetCommunity/ReqGetCommunity": {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 1,
+                    "id": 0,
                     "name": "locale",
                     "type": {
                         "type": "String"
@@ -184,7 +184,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/CommunityMember/PtlGetCommunityMemberDetails/ResGetCommunityMemberDetails": {
+        "v1/Community/PtlGetCommunity/ResGetCommunity": {
             "type": "Interface",
             "properties": [
                 {
@@ -203,11 +203,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/Communtiy/PtlGetCommunity/ReqGetCommunity": {
+        "v1/CommunityMember/PtlGetCommunityMemberDetails/ReqGetCommunityMemberDetails": {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
+                    "id": 1,
                     "name": "locale",
                     "type": {
                         "type": "String"
@@ -215,7 +215,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "v1/Communtiy/PtlGetCommunity/ResGetCommunity": {
+        "v1/CommunityMember/PtlGetCommunityMemberDetails/ResGetCommunityMemberDetails": {
             "type": "Interface",
             "properties": [
                 {

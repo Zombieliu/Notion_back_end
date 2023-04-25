@@ -189,8 +189,15 @@ const QueryCourseData = async (response: { results: string | any[]; },id: string
             let TypeList = TypeData(typeData)
 
             // @ts-ignore
-            let Community_recommendationPageId = await response.results[i].properties.Community_recommendation.relation[0].id
-            let Community_recommendationList = await CommunityRecommendationData(Community_recommendationPageId)
+            let Community_recommendationList
+
+            if(response.results[i].properties.Community_recommendation.relation[0]){
+                let Community_recommendationPageId = await response.results[i].properties.Community_recommendation.relation[0].id
+                 Community_recommendationList = await CommunityRecommendationData(Community_recommendationPageId)
+            }else {
+                Community_recommendationList = [{}]
+            }
+
 
             // @ts-ignore
             let TeacherPageId = await response.results[i].properties.Teacher.relation;

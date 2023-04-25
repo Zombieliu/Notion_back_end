@@ -6,7 +6,7 @@ import {
     enCommunityDatabaseID,
     enMediaDatabaseID, znCommunityDatabaseID, znMediaDatabaseID
 } from "../../../components/constants";
-import {ReqGetCommunity, ResGetCommunity} from "../../../shared/protocols/v1/Communtiy/PtlGetCommunity";
+import {ReqGetCommunity, ResGetCommunity} from "../../../shared/protocols/v1/Community/PtlGetCommunity";
 
 export default async function (call: ApiCall<ReqGetCommunity, ResGetCommunity>) {
     // Error
