@@ -19,7 +19,7 @@ export default async function (call: ApiCall<ReqGetActivityAllDetails, ResGetAct
     const databaseId = call.req.locale == "cn" ? znActivityDatabaseID : enActivityDatabaseID
     const response = await queryProjectAllDetailID(databaseId)
     let   project_details = await QueryAllActivity(response)
-
+    console.log(project_details)
     let time = new Date();
 
     // Success

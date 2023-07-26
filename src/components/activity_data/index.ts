@@ -44,8 +44,9 @@ const QueryAllActivity = async (response: { results: string | any[];}) =>{
                 des:   response.results[activity_length].properties.Des.rich_text[0].plain_text,
                 activityList: ActivityListList,
             }
-
+        // console.log(activity_info)
         Activity_info.push(activity_info)
+
     }
     return Activity_info
 }

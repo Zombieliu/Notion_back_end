@@ -1,6 +1,6 @@
 import {Client} from "@notionhq/client";
 
-const auth = "secret_sX8nm3y3BpOOGd1RbrCBWVm8bBJs6JzpwNZqwOfG5oA"
+const auth = "secret_CgEo78nHg1qIiGRQgafTh6UDdmKKJimr6AlmZkJXzUF"
 
 const  queryPageId =async (pageId: string) =>{
 
@@ -38,6 +38,7 @@ const queryProjectAllDetailID = async (databaseId: string) =>{
             }
         ],
     });
+
 
     return response
 

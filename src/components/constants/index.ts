@@ -1,24 +1,24 @@
-const znCourseDatabaseId = 'c836d780b39b47949d3b21f25304e726'
+const znCourseDatabaseId = 'dd6709f7ca39449f88ca9b6e380d95bc'
 
-const znMediaDatabaseID ="31cabc02325f41de93384f76e08b23b9"
-const znCommunityDatabaseID = "7515558945da4e39943111787995e806"
+const znMediaDatabaseID ="a3ebc78a01f2456b88810281ae20ed58"
+const znCommunityDatabaseID = "b0369baf3b624a0cbffc201d3564d3ee"
 
-const znCommunityMemberDatabaseID = "3270d9cc180446349a8082df97d59d45"
+const znCommunityMemberDatabaseID = "4e61ab102fa44686ba0ca0cc07610a5a"
 
-const znHackathonsDatabaseID = "d80b204a1aed41bc98a4acf9397062e9"
+const znHackathonsDatabaseID = "eb459b89d7724157b7ce3330ddedf369"
 
-const znActivityDatabaseID = "580eb646b37f4acaafcd5832a50a2ce3"
+const znActivityDatabaseID = "f3f9a195a6cd4eb39e6197aba46fc375"
 
-const enCourseDatabaseId = '3a5ecfeca457420aa8d4b52d27644942'
+const enCourseDatabaseId = 'bf51d35d99334336a1e597c4acbb5dde'
 
-const enMediaDatabaseID ="fe21d07cd5aa4d099dec2b8cb8e0f467"
-const enCommunityDatabaseID = "9026e267b29f443eb31159fa8dd48847"
+const enMediaDatabaseID ="6b10d61f832643bd8e38f4be8b0945a9"
+const enCommunityDatabaseID = "b17600816cb14dd589b15d89feb041ee"
 
-const enCommunityMemberDatabaseID = "054beb06304d40cd9d863d383e29848c"
+const enCommunityMemberDatabaseID = "c353900eec07483cac5465e565259c23"
 
-const enHackathonsDatabaseID = "10a00f1f5c474d9ba2d868cd757b8283"
+const enHackathonsDatabaseID = "9e435c9ff4f843fca19fa49b5ceb64a3"
 
-const enActivityDatabaseID = "4008b6c5018a490b9c63581d3edbc305"
+const enActivityDatabaseID = "aea154fdf1204b91a1d0655f39f4b5d4"
 
 
 export {

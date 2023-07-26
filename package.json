@@ -23,13 +23,14 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.3",
+    "@notionhq/client": "^2.2.9",
     "dotenv": "^9.0.2",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.2.1",
     "tsrpc": "^3.4.6",
     "tsrpc-browser": "^3.4.11",
+    "tsrpc-proto": "^1.4.3",
     "typeorm": "^0.3.10",
     "undici": "^5.21.0"
   },
