@@ -1,160 +1,194 @@
-import {notion_client} from "../../client";
 import {queryPageId} from "../../api/v1/public";
+import { GetPageResponse, PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 
-const TypeData  = (response: string | any[]) =>{
-    let TypeList = []
-    for (let type_length = 0 ;type_length<response.length;type_length++){
-        const type = {content:response[type_length].name}
-        TypeList.push(type)
-    }
-    return TypeList
+// 定义一个更通用的属性类型
+type PropertyValue = {
+  type: string;
+  [key: string]: any;
+};
+
+// 更新 CourseProperty 接口
+interface CourseProperty {
+  [key: string]: PropertyValue;
 }
 
-const CommunityRecommendationData = async (pageId: any) => {
+// 更新 CourseProperties 接口
+interface CourseProperties {
+  [key: string]: CourseProperty;
+}
 
-    let Community_recommendation = await queryPageId(pageId)
+// 更新 PageResponse 接口
+interface PageResponse {
+  properties: CourseProperties;
+  [key: string]: any;
+}
+
+// 定义一个更具体的 NotionPageResponse 类型
+type NotionPageResponse = GetPageResponse | PageObjectResponse;
+
+// 定义一个类型守卫函数
+function isPageObjectResponse(response: NotionPageResponse): response is PageObjectResponse {
+  return 'properties' in response;
+}
+
+// 更新 processData 函数
+const processData = async <T>(pageIds: any[], processor: (data: PageObjectResponse['properties']) => T): Promise<T[]> => {
+  const results = [];
+  for (const pageId of pageIds) {
+    const response = await queryPageId(typeof pageId === 'object' ? pageId.id : pageId) as NotionPageResponse;
+    if (isPageObjectResponse(response)) {
+      results.push(processor(response.properties));
+    } else {
+      console.error('Response does not contain properties:', response);
+    }
+  }
+  return results;
+};
+
+// 更新 extractProperty 函数
+const extractProperty = (property: any, key: string) => {
+  if (!property || typeof property !== 'object') {
+    return null;
+  }
+
+  // Check if 'type' exists in the property object
+  if (!('type' in property)) {
+    return null;
+  }
+
+  switch (property.type) {
+    case 'title':
+    case 'rich_text':
+      return property[key]?.[0]?.plain_text || null;
+    case 'number':
+      return property[key] || null;
+    case 'select':
+      return property[key]?.name || null;
+    case 'multi_select':
+      return property[key]?.map((item: any) => item.name) || [];
+    case 'date':
+      return property[key]?.start || null;
+    case 'files':
+      return property[key]?.[0]?.file?.url || null;
+    case 'url':
+      return property[key] || null;
+    case 'email':
+      return property[key] || null;
+    case 'phone_number':
+      return property[key] || null;
+    case 'checkbox':
+      return property[key] || null;
+    case 'relation':
+      return property[key] || [];
+    default:
+      return null;
+  }
+};
+
+const TypeData = (response: any[]): { content: string }[] =>
+  response.map(item => ({ content: item.name }));
+
+const CommunityRecommendationData = async (pageId: string): Promise<any[]> => {
+  const community = await queryPageId(pageId) as NotionPageResponse;
+  if (!isPageObjectResponse(community)) {
+    console.error('Community response does not contain properties:', community);
+    return [];
+  }
+  const subItems = community.properties["Sub-item"];
+  if (subItems.type !== 'relation' || !Array.isArray(subItems.relation)) {
+    console.error('Sub-item is not a relation or is not an array:', subItems);
+    return [];
+  }
+  
+  return Promise.all(subItems.relation.map(async (item) => {
+    const kidData = await queryPageId(item.id) as NotionPageResponse;
+    if (isPageObjectResponse(kidData)) {
+      const properties = kidData.properties;
+      return {
+        name: extractProperty(properties.Name, 'title'),
+        position: extractProperty(properties.Position, 'rich_text'),
+        img: extractProperty(properties.Img, 'files'),
+      name2: extractProperty(properties.Name2, 'rich_text'),
+      position2: extractProperty(properties.Position2, 'rich_text'),
+      img2: extractProperty(properties.Img2, 'files'),
+      text: extractProperty(properties.Text, 'rich_text'),
+    };
+    } else {
+      console.error('KidData response does not contain properties:', kidData);
+      return {};
+    }
+  }));
+};
+
+const TeacherData = (data: CourseProperties) => ({
+      // @ts-ignore
+  name: extractProperty(data.Name, 'title'),
+  // @ts-ignore
+  img: extractProperty(data.Img, 'files'),
     // @ts-ignore
-    let Community_recommendationData =  Community_recommendation.properties["Sub-item"].relation
-    let Community_recommendationList = []
-    for (let community_recommendation_length = 0; community_recommendation_length < Community_recommendationData.length; community_recommendation_length++) {
-        const Community_recommendationKids = await queryPageId(Community_recommendationData[community_recommendation_length].id)
-        // @ts-ignore
-        let Community_recommendationKidsData = Community_recommendationKids.properties
-        let community_recommendation = {
-            name: Community_recommendationKidsData.Name.title[0].plain_text,
-            position: Community_recommendationKidsData.Position.rich_text[0].plain_text,
-            img: Community_recommendationKidsData.Img.files[0].file.url,
-            name2: Community_recommendationKidsData.Name2.rich_text[0] ? Community_recommendationKidsData.Name2.rich_text[0].plain_text : "",
-            position2: Community_recommendationKidsData.Position2.rich_text[0] ? Community_recommendationKidsData.Position2.rich_text[0].plain_text : "",
-            img2: Community_recommendationKidsData.Img2.files[0] ? Community_recommendationKidsData.Img2.files[0].file.url : "",
-            text: Community_recommendationKidsData.Text.rich_text[0].plain_text,
-        }
-        Community_recommendationList.push(community_recommendation)
-
-    }
-    return Community_recommendationList
-
-}
-
-const TeacherData = async (pageId: string | any[])=>{
-
-    let TeacherList = []
-
-    for(let i = 0 ;i < pageId.length;i++){
-        let response = await queryPageId(pageId[i].id)
-        // @ts-ignore
-        // @ts-ignore
-        const teacher_data = await response.properties
-        const teacherList = {
-            name: teacher_data.Name.title[0].plain_text,
-            img: teacher_data.Img.files[0].file.url,
-            title: teacher_data.Title.rich_text[0].plain_text,
-            introduction: teacher_data.Introduction.rich_text[0].plain_text
-        }
-        TeacherList.push(teacherList)
-    }
-    return TeacherList
-
-}
-
-const ProjectProviderData = async (pageId: string | any[]) =>{
-    let ProjectProviderList = []
-
-    for(let i = 0 ;i < pageId.length;i++){
-        let response = await queryPageId(pageId[i].id)
-        // @ts-ignore
-        const project_provider_data = await response.properties
-        const project_provider_list = {
-            name: project_provider_data.Name.title[0].plain_text,
-            img: project_provider_data.Img.files[0].file.url,
-        }
-        ProjectProviderList.push(project_provider_list)
-    }
-    return ProjectProviderList
-
-}
-
-const TargetData = async (pageId: string | any[]) =>{
-    let TargetList = []
-
-    for(let i = 0 ;i < pageId.length;i++){
-        let response = await queryPageId(pageId[i].id)
-        // @ts-ignore
-        const target_data = await response.properties
-        const target_list = {
-            name: target_data.Name.title[0].plain_text,
-        }
-        TargetList.push(target_list)
-
-    }
-    return TargetList
-
-}
-
-const MethodData = async (pageId: string | any[]) =>{
-    let MethodList = []
-
-    for(let i = 0 ;i < pageId.length;i++){
-        let response = await queryPageId(pageId[i].id)
-        // @ts-ignore
-        const method_data = await response.properties
-        const method_list = {
-            name: method_data.Name.title[0].plain_text,
-            img: method_data.Img.files[0].file.url,
-        }
-        MethodList.push(method_list)
-    }
-    return MethodList
-
-}
-
-const CommunitySupportData = async (pageId: string | any[]) =>{
-    let CommunitySupportList = []
-    for(let i = 0 ;i < pageId.length;i++){
-        let response = await queryPageId(pageId[i].id)
-        // @ts-ignore
-        const community_support_data = await response.properties
-        const community_support_list = {
-            name: community_support_data.Name.title[0].plain_text,
-            icon: community_support_data.Icon.rich_text[0].plain_text,
-        }
-        CommunitySupportList.push(community_support_list)
-    }
-    return CommunitySupportList
-
-}
-
-const CourseData = async (pageId: { id: any }[]) =>{
-    let CourseDataList = []
-    let response = await queryPageId(pageId[0].id)
+  title: extractProperty(data.Title, 'rich_text'),
     // @ts-ignore
-    let course_data = await response.properties["Sub-item"].relation
-    for(let i=0; i <course_data.length ; i++){
-        let response = await queryPageId(course_data[i].id)
-        // @ts-ignore
-        let courseKidData = await response.properties
-        let ContentList = []
-        let course_kid2_data  = await courseKidData["Sub-item"].relation
+  introduction: extractProperty(data.Introduction, 'rich_text'),
+});
 
-        for(let x=0;x< course_kid2_data.length;x++){
-            let response = await queryPageId(course_kid2_data[x].id)
-            // @ts-ignore
-            let contentKid2Data = response.properties
-            let courseKid2Data={
-                text:contentKid2Data.Name.title[0].plain_text
-            }
-            ContentList.push(courseKid2Data)
-        }
-        let courseKidDataList = {
-            name: courseKidData.Name.title[0].plain_text,
-            content: ContentList
-        }
-       await CourseDataList.push(courseKidDataList)
+const ProjectProviderData = (data: CourseProperties) => ({
+      // @ts-ignore
+  name: extractProperty(data.Name, 'title'),
+    // @ts-ignore
+  img: extractProperty(data.Img, 'files'),
+});
+
+const TargetData = (data: CourseProperties) => ({
+  // @ts-ignore
+  name: extractProperty(data.Name, 'title'),
+});
+
+const MethodData = (data: CourseProperties) => ({
+  // @ts-ignore
+  name: extractProperty(data.Name, 'title'),
+  // @ts-ignore
+  img: extractProperty(data.Img, 'files'),
+});
+
+const CommunitySupportData = (data: CourseProperties) => ({
+      // @ts-ignore
+  name: extractProperty(data.Name, 'title'),
+    // @ts-ignore
+  icon: extractProperty(data.Icon, 'rich_text'),
+});
+
+const CourseData = async (pageId: { id: string }[]): Promise<any[]> => {
+  const response = await queryPageId(pageId[0].id);
+  if (!isPageObjectResponse(response)) {
+    console.error('Response is not a PageObjectResponse:', response);
+    return [];
+  }
+  const subItems = response.properties["Sub-item"];
+  if (subItems.type !== 'relation' || !Array.isArray(subItems.relation)) {
+    console.error('Sub-item is not a relation or is not an array:', subItems);
+    return [];
+  }
+
+  return Promise.all(subItems.relation.map(async (item: { id: string }) => {
+    const kidResponse = await queryPageId(item.id);
+    if (!isPageObjectResponse(kidResponse)) {
+      console.error('KidResponse is not a PageObjectResponse:', kidResponse);
+      return {};
     }
+    const kidProperties = kidResponse.properties;
+    if (kidProperties["Sub-item"].type !== 'relation' || !Array.isArray(kidProperties["Sub-item"].relation)) {
+      console.error('Sub-item is not a relation or is not an array:', kidProperties["Sub-item"]);
+      return {};
+    }
+    const contentList = await processData(kidProperties["Sub-item"].relation, 
+      (data) => ({ text: extractProperty(data.Name, 'title') }));
 
-
-    return  CourseDataList
-}
+    return {
+      name: extractProperty(kidProperties.Name, 'title'),
+      content: contentList,
+    };
+  }));
+};
 
 const QueryAllCourse = async (response: { results: string | any[];}) =>{
     const Course_info = []
@@ -179,90 +213,78 @@ const QueryAllCourse = async (response: { results: string | any[];}) =>{
     return Course_info
 }
 
-const QueryCourseData = async (response: { results: string | any[]; },id: string) => {
-     let project_details = []
-    for (let i=0;i<response.results.length;i++){
-        // @ts-ignore
-        if (response.results[i].properties.ID.number.toString() == id){
-            // @ts-ignore
-            let typeData = await response.results[i].properties.Type.multi_select
-            let TypeList = TypeData(typeData)
-
-            // @ts-ignore
-            let Community_recommendationList
-
-            if(response.results[i].properties.Community_recommendation.relation[0]){
-                let Community_recommendationPageId = await response.results[i].properties.Community_recommendation.relation[0].id
-                 Community_recommendationList = await CommunityRecommendationData(Community_recommendationPageId)
-            }else {
-                Community_recommendationList = [{}]
-            }
-
-
-            // @ts-ignore
-            let TeacherPageId = await response.results[i].properties.Teacher.relation;
-            let Teacher_List = await TeacherData(TeacherPageId)
-
-            // @ts-ignore
-            let ProjectProviderPageId = await response.results[i].properties.Project_provider.relation
-            let Project_providerList = await ProjectProviderData(ProjectProviderPageId)
-
-            // @ts-ignore
-            let TargetPageId = await  response.results[i].properties.Target.relation
-            let Target_List = await TargetData(TargetPageId)
-
-            // @ts-ignore
-            let MethodPageId = await  response.results[i].properties.Method.relation
-            let Method_List = await MethodData(MethodPageId)
-
-            // @ts-ignore
-            let CommunitySupportPageId = await  response.results[i].properties.Community_support.relation
-            let Community_support_List = await CommunitySupportData(CommunitySupportPageId)
-
-            // @ts-ignore
-            let CourseDataPageId = await response.results[i].properties.Course_data.relation
-            let Course_list = await CourseData(CourseDataPageId)
-
-
-            let course_info =
-                {
-
-                    id: response.results[i].properties.ID.number,
-
-                    name: response.results[i].properties.Name.title[0].plain_text,
-
-                    cycle: response.results[i].properties.Cycle.rich_text[0].plain_text,
-
-                    img: response.results[i].properties.Img.files[0].file.url,
-
-                    title: response.results[i].properties.Title.rich_text[0].plain_text,
-
-                    link: response.results[i].properties.Link.url,
-
-                    state: response.results[i].properties.State.status.name,
-
-                    homeDisplay:response.results[i].properties.HomeDisplay.status.name,
-
-                    startTime: response.results[i].properties.StartTime.rich_text[0].plain_text,
-
-                    endTime: response.results[i].properties.EndTime.rich_text[0].plain_text,
-                    type: TypeList,
-                    course_data:Course_list,
-                    community_recommendation: Community_recommendationList,
-                    teacher: Teacher_List,
-                    project_provider: Project_providerList,
-                    method:Method_List,
-                    target: Target_List,
-                    community_support: Community_support_List
-                }
-
-            project_details.push(course_info)
-
-        }
+const QueryCourseData = async (response: { results: any[] }, id: string) => {
+  try {
+    const course = response.results.find(result => result.properties.ID.number.toString() === id);
+    
+    if (!course) {
+      return [];
     }
 
+    const {
+      Type,
+      Community_recommendation,
+      Teacher,
+      Project_provider,
+      Target,
+      Method,
+      Community_support,
+      Course_data,
+      ...otherProperties
+    } = course.properties;
 
-    return project_details
-}
+    const TypeList = TypeData(Type.multi_select);
+
+    const Community_recommendationList = Community_recommendation.relation[0]
+      ? await CommunityRecommendationData(Community_recommendation.relation[0].id)
+      : [{}];
+
+    const [
+      Teacher_List,
+      Project_providerList,
+      Target_List,
+      Method_List,
+      Community_support_List,
+      Course_list
+    ] = await Promise.all([
+      TeacherData(Teacher.relation),
+      ProjectProviderData(Project_provider.relation),
+      TargetData(Target.relation),
+      MethodData(Method.relation),
+      CommunitySupportData(Community_support.relation),
+      CourseData(Course_data.relation)
+    ]);
+
+    const course_info = {
+      id: otherProperties.ID.number,
+      name: otherProperties.Name.title[0].plain_text,
+      cycle: otherProperties.Cycle.rich_text[0].plain_text,
+      img: otherProperties.Img.files[0].file.url,
+      title: otherProperties.Title.rich_text[0].plain_text,
+      link: otherProperties.Link.url,
+      state: otherProperties.State.status.name,
+      homeDisplay: otherProperties.HomeDisplay.status.name,
+      startTime: otherProperties.StartTime.rich_text[0].plain_text,
+      endTime: otherProperties.EndTime.rich_text[0].plain_text,
+      type: TypeList,
+      course_data: Course_list,
+      community_recommendation: Community_recommendationList,
+      teacher: Teacher_List,
+      project_provider: Project_providerList,
+      method: Method_List,
+      target: Target_List,
+      community_support: Community_support_List
+    };
+
+    console.log('Course data before processing:', course_info);
+    const result = course_info;
+    console.log('Processed course data:', result);
+
+    return [result];
+  } catch (error) {
+    console.error('Error in QueryCourseData:', error);
+    throw error;
+  }
+};
 
 export {QueryAllCourse,QueryCourseData,TypeData,CommunityRecommendationData,TeacherData,ProjectProviderData,TargetData,MethodData,CommunitySupportData,CourseData}

@@ -17,3 +17,9 @@ export interface ResGetCourseDetails {
     project_details:string
     time: Date
 }
+
+export interface CourseData {
+  // ... other properties ...
+  img: string | null;
+  // ... rest of the properties ...
+}
