@@ -1,34 +1,30 @@
 import { ApiCall } from "tsrpc";
-import {queryProjectAllDetailID} from "../public";
-import {
-    ReqGetActivityAllDetails,
-    ResGetActivityAllDetails
-} from "../../../shared/protocols/v1/Activity/PtlGetActivityAllDetails";
-import {QueryActivity, QueryAllActivity} from "../../../components/activity_data";
-import {
-    enActivityDatabaseID,
-    znActivityDatabaseID
-} from "../../../components/constants";
+import { queryProjectAllDetailID } from "../public";
 import {
     ReqGetActivityDetails,
     ResGetActivityDetails
 } from "../../../shared/protocols/v1/Activity/PtlGetActivityDetails";
+import { QueryActivity } from "../../../components/activity_data";
+import {
+    znDatabaseIds,
+    enDatabaseIds
+} from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetActivityDetails, ResGetActivityDetails>) {
-    // Error
-    if (call.req.locale === '') {
-        await call.error('guild_id is empty');
-        return;
-    }
-    const databaseId = call.req.locale == "cn" ? znActivityDatabaseID : enActivityDatabaseID
-    const response = await queryProjectAllDetailID(databaseId)
-    let   project_details = await QueryActivity(response,call.req.id)
+    const { locale, id } = call.req;
 
-    let time = new Date();
+    // Error handling
+    if (!locale) {
+        return call.error('locale is empty');
+    }
+
+    const databaseId = locale === "cn" ? znDatabaseIds.activity : enDatabaseIds.activity;
+    const response = await queryProjectAllDetailID(databaseId);
+    const projectDetails = await QueryActivity(response, id);
 
     // Success
-    await call.succ({
-        project_details:JSON.stringify(project_details),
-        time
+    return call.succ({
+        project_details: JSON.stringify(projectDetails),
+        time: new Date()
     });
 }

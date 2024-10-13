@@ -1,34 +1,28 @@
 import { ApiCall } from "tsrpc";
-import {queryProjectAllDetailID} from "../public";
+import { queryProjectAllDetailID } from "../public";
 import {
     ReqGetHackathonsDetails,
     ResGetHackathonsDetails
 } from "../../../shared/protocols/v1/Hackathons/PtlGetHackathonsDetails";
-import {HackathonsData} from "../../../components/Hackathons";
+import { HackathonsData } from "../../../components/Hackathons";
 import {
-    enCourseDatabaseId,
-    enHackathonsDatabaseID,
-    znCourseDatabaseId,
-    znHackathonsDatabaseID
+    znDatabaseIds,
+    enDatabaseIds
 } from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetHackathonsDetails, ResGetHackathonsDetails>) {
-    // Error
-    if (call.req.locale === '') {
-        await call.error('guild_id is empty');
-        return;
+    const { locale } = call.req;
+
+    if (!locale) {
+        return call.error('Locale is empty');
     }
 
-    const databaseId = call.req.locale == "cn" ? znHackathonsDatabaseID : enHackathonsDatabaseID
-    const response = await queryProjectAllDetailID(databaseId)
-    let hackathons_data = await HackathonsData(response.results)
+    const databaseId = locale === "cn" ? znDatabaseIds.hackathons : enDatabaseIds.hackathons;
+    const response = await queryProjectAllDetailID(databaseId);
+    const hackathonsData = await HackathonsData(response.results);
 
-
-    let time = new Date();
-
-    // Success
     await call.succ({
-        project_details:JSON.stringify(hackathons_data),
-        time
+        project_details: JSON.stringify(hackathonsData),
+        time: new Date()
     });
 }

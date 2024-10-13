@@ -1,15 +1,8 @@
+const MediaData = async (response: any[]): Promise<Array<{ href: string; img: string }>> => {
+  return response.map(item => ({
+    href: item.properties.Link.url,
+    img: item.properties.Img.files[0].file.url
+  }));
+};
 
-
-const MediaData  = async (response: any) =>{
-    let MediaDataList = []
-    for (let i = 0 ;i<response.length;i++){
-        const List = {
-            href:response[i].properties.Link.url,
-            img:response[i].properties.Img.files[0].file.url
-        }
-        MediaDataList.push(List)
-    }
-    return MediaDataList
-}
-
-export {MediaData}
+export { MediaData };

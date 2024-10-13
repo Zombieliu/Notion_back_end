@@ -4,7 +4,7 @@ import {
 } from "../../../shared/protocols/v1/Course/PtlGetCourseAllDetails";
 import {queryProjectAllDetailID} from "../public";
 import {QueryAllCourse} from "../../../components/course_data";
-import {enCourseDatabaseId, znCourseDatabaseId} from "../../../components/constants";
+import {znDatabaseIds, enDatabaseIds} from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetCourseAllDetails, ResGetCourseAllDetails>) {
     // Error
@@ -14,7 +14,7 @@ export default async function (call: ApiCall<ReqGetCourseAllDetails, ResGetCours
     }
 
     try {
-        const databaseId = call.req.locale == "cn" ? znCourseDatabaseId : enCourseDatabaseId
+        const databaseId = call.req.locale == "cn" ? znDatabaseIds.course : enDatabaseIds.course
         const response = await queryProjectAllDetailID(databaseId)
         
         if (!response) {

@@ -1,30 +1,34 @@
 import { ApiCall } from "tsrpc";
-import {queryProjectAllDetailID} from "../public";
+import { queryProjectAllDetailID } from "../public";
 import {
     ReqGetActivityAllDetails,
     ResGetActivityAllDetails
 } from "../../../shared/protocols/v1/Activity/PtlGetActivityAllDetails";
-import {QueryAllActivity} from "../../../components/activity_data";
+import { QueryAllActivity } from "../../../components/activity_data";
 import {
-    enActivityDatabaseID,
-    znActivityDatabaseID
+    znDatabaseIds,
+    enDatabaseIds
 } from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetActivityAllDetails, ResGetActivityAllDetails>) {
-    // Error
-    if (call.req.locale === '') {
-        await call.error('guild_id is empty');
-        return;
-    }
-    const databaseId = call.req.locale == "cn" ? znActivityDatabaseID : enActivityDatabaseID
-    const response = await queryProjectAllDetailID(databaseId)
-    let   project_details = await QueryAllActivity(response)
-    console.log(project_details)
-    let time = new Date();
+    const { locale } = call.req;
 
-    // Success
-    await call.succ({
-        project_details:JSON.stringify(project_details),
-        time
-    });
+    if (!locale) {
+        return call.error('Locale is required');
+    }
+
+    const databaseId = locale === "cn" ? znDatabaseIds.activity : enDatabaseIds.activity;
+    
+    try {
+        const response = await queryProjectAllDetailID(databaseId);
+        const projectDetails = await QueryAllActivity(response);
+        
+        return call.succ({
+            project_details: JSON.stringify(projectDetails),
+            time: new Date()
+        });
+    } catch (error) {
+        console.error('Error fetching activity details:', error);
+        return call.error('Failed to fetch activity details');
+    }
 }

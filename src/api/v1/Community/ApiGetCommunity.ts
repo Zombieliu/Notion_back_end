@@ -1,28 +1,22 @@
 import { ApiCall } from "tsrpc";
-import {queryProjectAllDetail} from "../public";
-import {ReqGetMediaDetails, ResGetMediaDetails} from "../../../shared/protocols/v1/Media/PtlGetMediaDetails";
-import {MediaData} from "../../../components/media_data";
-import {
-    enCommunityDatabaseID,
-    enMediaDatabaseID, znCommunityDatabaseID, znMediaDatabaseID
-} from "../../../components/constants";
-import {ReqGetCommunity, ResGetCommunity} from "../../../shared/protocols/v1/Community/PtlGetCommunity";
+import { queryProjectAllDetail } from "../public";
+import { ReqGetCommunity, ResGetCommunity } from "../../../shared/protocols/v1/Community/PtlGetCommunity";
+import { MediaData } from "../../../components/media_data";
+import { znDatabaseIds, enDatabaseIds } from "../../../components/constants";
 
 export default async function (call: ApiCall<ReqGetCommunity, ResGetCommunity>) {
-    // Error
-    if (call.req.locale === '') {
-        await call.error('guild_id is empty');
-        return;
+    const { locale } = call.req;
+
+    if (!locale) {
+        return call.error('Locale is required');
     }
-    const databaseId = call.req.locale == "cn" ? znCommunityDatabaseID : enCommunityDatabaseID
-    const response = await queryProjectAllDetail(databaseId)
-    let media_data = await MediaData(response.results)
 
-    let time = new Date();
+    const databaseId = locale.toLowerCase() === "cn" ? znDatabaseIds.community : enDatabaseIds.community;
+    const response = await queryProjectAllDetail(databaseId);
+    const mediaData = await MediaData(response.results);
 
-    // Success
     await call.succ({
-        project_details:JSON.stringify(media_data),
-        time
+        project_details: JSON.stringify(mediaData),
+        time: new Date()
     });
 }
