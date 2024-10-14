@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/mocha": "^8.2.3",
     "@types/node": "^15.14.9",
+    "@types/uuid": "^10.0.0",
     "mocha": "^9.2.2",
     "onchange": "^7.1.0",
     "ts-node": "^10.9.1",
@@ -32,7 +33,8 @@
     "tsrpc-browser": "^3.4.11",
     "tsrpc-proto": "^1.4.3",
     "typeorm": "^0.3.10",
-    "undici": "^5.21.0"
+    "undici": "^5.21.0",
+    "uuid": "^10.0.0"
   },
   "resolutions": {
     "babel-core": "^7.0.0-bridge.0",
